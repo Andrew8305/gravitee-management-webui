@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import _ = require('lodash');
 import moment = require("moment");
 class ApiAnalyticsController {
 
   private api: any;
-  
+
   constructor(private ApiService, private resolvedApi, private $scope) {
   'ngInject';
     this.ApiService = ApiService;
@@ -163,6 +164,7 @@ class ApiAnalyticsController {
             type: 'group_by',
             field: 'tenant',
             size: 20
+
           }
         }
       });
