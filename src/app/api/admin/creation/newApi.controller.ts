@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 class NewApiController {
+
+  /*
   constructor($scope, $state, $stateParams, $window, $q, base64, $mdDialog, ApiService, NotificationService, DocumentationService, $timeout) {
     'ngInject';
     this.$scope = $scope;
@@ -27,6 +29,24 @@ class NewApiController {
     this.NotificationService = NotificationService;
     this.DocumentationService = DocumentationService;
     this.$timeout = $timeout;
+   */
+
+  private api: any;
+  private vm: {
+    selectedStep: number;
+    stepProgress: number;
+    maxStep: number;
+    showBusyText: boolean;
+    stepData: {
+      step: number;
+      completed: boolean;
+      optional: boolean;
+      data: any
+    }[]
+  };
+
+  constructor(private $stateParams, private $window, private ApiService, private NotificationService) {
+    'ngInject';
 
     this.api = _.clone(this.$stateParams.api) !== null ? _.clone(this.$stateParams.api) : {};
     this.contextPathInvalid = true;
@@ -64,21 +84,23 @@ class NewApiController {
     md-stepper
    */
   initStepSettings() {
-    this.vm = {};
-    this.vm.selectedStep = 0;
-    this.vm.stepProgress = 1;
-    this.vm.maxStep = 5;
-    this.vm.showBusyText = false;
-    this.vm.stepData = [
-      {step: 1, label: "General", completed: false, optional: false, data: {}},
-      {step: 2, label: "Gateway", completed: false, optional: false, data: {}},
-      {step: 3, label: "Plan", completed: false, optional: true, data: {}},
-      {step: 4, label: "Documentation", completed: false, optional: true, data: {}},
-      {step: 5, label: "Confirmation", completed: false, optional: false, data: {}}];
-
     this.skippedStep = false;
     this.apiSteps = [];
     this.apiSteps.push(this.steps()[0]);
+
+    this.vm = {
+      selectedStep: 0,
+      stepProgress: 1,
+      maxStep: 5,
+      showBusyText: false,
+      stepData: [
+        {step: 1, completed: false, optional: false, data: {}},
+        {step: 2, completed: false, optional: false, data: {}},
+        {step: 3, label: "Plan", completed: false, optional: true, data: {}},
+        {step: 4, label: "Documentation", completed: false, optional: true, data: {}},
+        {step: 5, label: "Confirmation", completed: false, optional: false, data: {}}
+      ]
+    };
   }
 
   enableNextStep() {

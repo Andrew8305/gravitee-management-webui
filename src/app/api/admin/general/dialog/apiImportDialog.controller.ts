@@ -18,11 +18,11 @@ function DialogApiImportController($scope, $mdDialog, ApiService, apiId) {
 
   $scope.pageContentFile = {content: '', name : ''};
 
-  this.hide = function() {
+  $scope.hide = function() {
     $mdDialog.hide();
   };
 
-  this.import = function() {
+  $scope.import = function() {
     ApiService.import(apiId, $scope.pageContentFile.content).then(function (data) {
       $mdDialog.hide(data);
     });

@@ -23,11 +23,11 @@ function DialogApiExportController($scope, $mdDialog, ApiService, apiId, base64)
     { id: "plans", description: "Plans", checked: true }
   ];
 
-  this.hide = function() {
+  $scope.hide = function() {
     $mdDialog.hide();
   };
 
-  this.export = function() {
+  $scope.export = function() {
     var excludes = _.map(_.filter($scope.filteredFields, (fl) => { return !fl.checked; }), "id");
     ApiService.export(apiId, excludes)
       .then( (response) => {

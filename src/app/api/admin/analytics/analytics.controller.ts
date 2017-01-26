@@ -13,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import moment = require("moment");
 class ApiAnalyticsController {
-  constructor(ApiService, resolvedApi, $scope) {
-    'ngInject';
+
+  private api: any;
+  
+  constructor(private ApiService, private resolvedApi, private $scope) {
+  'ngInject';
     this.ApiService = ApiService;
     this.$scope = $scope;
     this.api = resolvedApi.data;
