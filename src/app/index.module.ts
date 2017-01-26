@@ -124,6 +124,8 @@ import TenantsController from './configuration/admin/tenants/tenants.controller'
 import TenantService from './services/tenant.service';
 import DeleteTenantDialogController from './configuration/admin/tenants/delete.tenant.dialog.controller';
 
+import angular = require("angular");
+
 angular.module('gravitee', ['ui.router', 'ngMaterial', 'ramlConsoleApp', 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
   'ngMessages', 'vAccordion', 'schemaForm', 'ngclipboard', 'ui.validate', 'gvConstants', 'angular-timeline',
@@ -234,7 +236,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', 'ramlConsoleApp', 'ng-sho
   .service('SubscriptionService', SubscriptionService)
   .service('TagService', TagService)
   .service('TenantService', TenantService)
-  .directive('filecontent', () => new DocumentationDirective())
+  .directive('filecontent', DocumentationDirective)
   .directive('graviteeSidenav', () => new SideNavDirective())
   .directive('graviteePage', () => new PageDirective())
   .directive('noDirtyCheck', () => new FormDirective())
