@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 class ApiPropertiesController {
-  constructor (ApiService, resolvedApi, $mdSidenav, $mdEditDialog, $state, $mdDialog, NotificationService, $scope, $rootScope) {
+
+  private api: any;
+  constructor (
+    private ApiService,
+    private resolvedApi,
+    private $mdSidenav,
+    private $mdEditDialog,
+    private $mdDialog,
+    private NotificationService,
+    private $scope,
+    private $rootScope
+  ) {
     'ngInject';
-    this.ApiService = ApiService;
-    this.$mdDialog = $mdDialog;
-    this.NotificationService = NotificationService;
-    this.$scope = $scope;
-    this.$state = $state;
-    this.$rootScope = $rootScope;
     this.api = resolvedApi.data;
     this.$mdSidenav = $mdSidenav;
     this.$mdEditDialog = $mdEditDialog;
