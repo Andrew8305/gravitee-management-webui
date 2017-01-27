@@ -13,15 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import * as _ from 'lodash';
+
 class ApisController {
-  constructor(ApiService, $mdDialog, $scope, $state, $rootScope, Constants, resolvedApis, resolvedViews, $q, $timeout) {
+
+  private graviteeUIVersion: string;
+  private apisScrollAreaHeight: number;
+  private isAPIsHome: boolean;
+  private createMode: boolean;
+  private views: any;
+  private selectedIndex: any;
+  private apis: any;
+  private devMode: boolean;
+  private syncStatus: any;
+  private NotificationService: any;
+
+  constructor(
+    private ApiService,
+    private $mdDialog,
+    private $scope,
+    private $state,
+    private $rootScope,
+    private Constants,
+    private resolvedApis,
+    private resolvedViews,
+    private ViewService,
+    private $q: ng.IQService,
+    private $timeout
+  ) {
     'ngInject';
-    this.$q = $q;
-    this.ApiService = ApiService;
-    this.$mdDialog = $mdDialog;
-    this.$scope = $scope;
-    this.$state = $state;
-    this.$rootScope = $rootScope;
+
     this.graviteeUIVersion = Constants.version;
     this.apis = resolvedApis.data;
 
@@ -40,7 +62,7 @@ class ApisController {
           return view.id === that.$state.params.view;
         });
       } else {
-        that.selectedIndex = 0;
+        this.selectedIndex = 0;
       }
     });
 

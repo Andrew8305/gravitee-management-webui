@@ -32,7 +32,7 @@ class DashboardModelDirective {
 }
 
 class DashboardModelController {
-  constructor($scope) {
+  constructor(private $scope) {
     'ngInject';
     this.$scope = $scope;
     if (this.$scope.metadata) {

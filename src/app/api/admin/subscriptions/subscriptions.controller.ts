@@ -13,16 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class SubscriptionsController {
-  constructor($window, $mdDialog, $scope, $state, ApiService, NotificationService, resolvedApi, resolvedSubscriptions, ApplicationService) {
-    'ngInject';
-    this.$window = $window;
-    this.$mdDialog = $mdDialog;
-    this.$state = $state;
-    this.ApiService = ApiService;
-    this.NotificationService = NotificationService;
-    this.ApplicationService = ApplicationService;
+import * as _ from 'lodash';
 
+class SubscriptionsController {
+  private api: any;
+  private subscriptions: any;
+  private statusFilters: string[];
+  private selectedStatus: string[];
+  private subscriptionsByApplication: any;
+
+  constructor(
+    private $mdDialog: angular.material.IDialogService,
+    private $scope,
+    private ApiService,
+    private NotificationService,
+    private resolvedApi,
+    private resolvedSubscriptions,
+    private ApplicationService
+  ) {
+    'ngInject';
     $scope.data = [];
 
     this.api = resolvedApi.data;
@@ -46,15 +55,11 @@ class SubscriptionsController {
   applyFilters() {
     var that = this;
     this.subscriptionsByApplication =
-      _.orderBy(
-        _.groupBy(
-          _.filter(this.subscriptions, (subscription) => {
-            return _.includes(that.selectedStatus, subscription.status);
-          }), 'application.id'
-        ), (subscriptions) => {
-          return subscriptions[0].application.name;
-        }
-      );
+      _(this.subscriptions)
+        .filter((subscription) => _.includes(that.selectedStatus, subscription.status))
+        .groupBy('application.id')
+        .orderBy((subscriptions) =>  subscriptions[0].application.name)
+        .value();
   }
 
   hasKeysDefined() {
@@ -76,7 +81,7 @@ class SubscriptionsController {
         _this.ApiService.revokeApiKey(_this.api.id, subscription.id, apiKey).then(() => {
           _this.NotificationService.show('API Key ' + apiKey + ' has been revoked !');
 
-          _this.refresh();
+          this.refresh();
         });
       }
     });
@@ -88,18 +93,16 @@ class SubscriptionsController {
   }
 
   showExpirationModal(apiKey) {
-    var _this = this;
-
     this.$mdDialog.show({
       controller: 'DialogApiKeyExpirationController',
       controllerAs: 'dialogApiKeyExpirationController',
       templateUrl: 'app/api/admin/subscriptions/apikey.expiration.dialog.html',
       clickOutsideToClose: true
-    }).then(function (expirationDate) {
+    }).then(expirationDate =>{
       apiKey.expire_at = expirationDate;
 
-      _this.ApiService.updateApiKey(_this.api.id, apiKey).then(() => {
-        _this.NotificationService.show('An expiration date has been settled for API Key');
+      this.ApiService.updateApiKey(this.api.id, apiKey).then(() => {
+        this.NotificationService.show('An expiration date has been settled for API Key');
       });
     });
   }

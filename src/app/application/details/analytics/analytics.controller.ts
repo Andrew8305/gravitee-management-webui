@@ -13,13 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+
 class ApplicationAnalyticsController {
-  constructor(ApplicationService, resolvedApplication, $scope, $state) {
+
+  private application: any;
+
+  constructor(
+    private ApplicationService,
+    private resolvedApplication,
+    private $scope
+  ) {
     'ngInject';
-    this.ApplicationService = ApplicationService;
-    this.$scope = $scope;
+
     this.$scope.Object = Object;
-    this.$state = $state;
     this.application = resolvedApplication.data;
 
     this.$scope.applicationDashboard = [{
@@ -115,6 +122,7 @@ class ApplicationAnalyticsController {
           service: {
             caller: _that.ApplicationService,
             function: _that.ApplicationService.analytics
+
           }
         }
       });
