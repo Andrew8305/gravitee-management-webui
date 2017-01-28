@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class DiffDirective {
-  constructor() {
-    this.restrict = 'AE';
-    this.scope = {
-      oldValue: "=oldValue",
-      newValue: "=newValue"
-    };
-  }
 
-  link(scope, elem) {
+import * as JsDiff from 'jsdiff';
+
+const DiffDirective: ng.IDirectiveFactory = () => ({
+  restrict: 'AE',
+  scope: {
+    oldValue: '=',
+    newValue: '='
+  },
+  link: (scope: any, elem) => {
     scope.$watch('oldValue', function(){
       var oldValue = scope.oldValue;
       var newValue = scope.newValue;
@@ -43,7 +43,6 @@ class DiffDirective {
       }
     });
   }
-}
-
+});
 
 export default DiffDirective;
