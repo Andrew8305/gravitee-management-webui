@@ -39,6 +39,9 @@ require('md-steppers');
 require('angular-ui-tree');
 require('angular-jwt');
 require('ng-showdown');
+require('angular-swagger-ui/dist/scripts/swagger-ui.js');
+require('angular-swagger-ui/dist/scripts/modules/swagger-yaml-parser.min.js');
+require('angular-swagger-ui/dist/scripts/modules/swagger-xml-formatter.min.js');
 
 import '../constants';
 
@@ -157,7 +160,7 @@ import DeleteTenantDialogController from './configuration/admin/tenants/delete.t
 
 import angular = require("angular");
 
-angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', /*'swaggerUi',*/
+angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
   'ngMessages', 'vAccordion', 'schemaForm', 'ngclipboard', 'ui.validate', 'gvConstants', 'angular-timeline',
   'ab-base64',  'ngFileUpload', 'md-steppers', 'ui.tree', 'angular-jwt', 'gridster'])
