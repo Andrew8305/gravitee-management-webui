@@ -59,7 +59,6 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'ApisController',
       controllerAs: 'apisCtrl',
       resolve: {
-
         resolvedApis: function ($stateParams, ApiService) {
           if ($stateParams.view && $stateParams.view !== 'all') {
             return ApiService.list($stateParams.view);
@@ -69,12 +68,10 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         resolvedViews: (ViewService: ViewService) => {
           return ViewService.list().then(response => {
             let views = response.data;
-            let selectedIndex;
             views.unshift({id: 'all', name: 'All APIs'});
-
+            console.log(views);
             return views;
-          });
-        }
+          })
       },
       data: {
         menu: {
