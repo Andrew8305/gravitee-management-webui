@@ -55,9 +55,9 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('apis.list', {
       url: '/?view',
-      templateUrl: 'app/api/apisList.html',
+      template: require('./api/apisList.html'),
       controller: 'ApisController',
-      controllerAs: 'apisCtrl',
+      controllerAs: '$ctrl',
       resolve: {
         resolvedApis: function ($stateParams, ApiService) {
           if ($stateParams.view && $stateParams.view !== 'all') {
@@ -69,7 +69,6 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
           return ViewService.list().then(response => {
             let views = response.data;
             views.unshift({id: 'all', name: 'All APIs'});
-            console.log(views);
             return views;
           })
       },
@@ -80,6 +79,13 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
           firstLevel: true
         },
         devMode: true
+      },
+      params: {
+        view: {
+          type: 'string',
+          value: 'all',
+          squash: true
+        }
       }
     })
     .state('apis.portal', {

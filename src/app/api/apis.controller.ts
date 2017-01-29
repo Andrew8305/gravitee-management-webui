@@ -22,8 +22,8 @@ class ApisController {
   private apisScrollAreaHeight: number;
   private isAPIsHome: boolean;
   private createMode: boolean;
-  private selectedIndex: number;
-  private apis: any;
+  private selectedIndex: number = 0;
+  // private apis: any;
   private devMode: boolean;
   private syncStatus: any;
   private NotificationService: any;
@@ -32,7 +32,7 @@ class ApisController {
     private ApiService,
     private $mdDialog,
     private $scope,
-    private $state,
+    private $state: ng.ui.IStateService,
     private $rootScope,
     private Constants,
     private resolvedApis,
@@ -133,7 +133,7 @@ class ApisController {
       if (response) {
         that.$state.go('apis.admin.general', {apiId: response.data.id}, {reload: true});
       }
-    });
+    })*/;
   }
 
   showImportSwaggerDialog() {

@@ -17,9 +17,9 @@
 -->
 <section>
   <div class="landing-header">
-    <h3>{{portalTitle}} <small>version {{apisCtrl.graviteeUIVersion}}</small></h3>
+    <h3>{{portalTitle}} <small>version {{$ctrl.graviteeUIVersion}}</small></h3>
   </div>
-  <div ng-if="apisCtrl.apis.length > 0">
+  <div ng-if="$ctrl.apis.length > 0">
     <md-card class="no-box-shadow">
       <md-card-header>
         <md-card-header-text layout="row" layout-align="center">
@@ -28,20 +28,20 @@
           </div>
         </md-card-header-text>
       </md-card-header>
-      <md-tabs md-selected="apisCtrl.selectedIndex" md-dynamic-height md-border-bottom>
-        <md-tab label="{{view.name}}" ng-repeat="view in apisCtrl.views track by view.id"
+      <md-tabs md-selected="$ctrl.selectedIndex" md-dynamic-height md-border-bottom>
+        <md-tab label="{{view.name}}" ng-repeat="view in $ctrl.views track by view.id"
                 ng-if="view.id === 'all' || view.totalApis > 0" ui-sref="apis.list({ view: view.id })">
           <h5 ng-if="view.description && !hideApis" class="gravitee-view-description">{{view.description}}</h5>
         </md-tab>
       </md-tabs>
-      <md-card-content ng-show="!hideApis" style="padding: 0px; overflow-y: auto; height: calc(100vh - {{apisCtrl.apisScrollAreaHeight}}px);">
+      <md-card-content ng-show="!hideApis" style="padding: 0px; overflow-y: auto; height: calc(100vh - {{$ctrl.apisScrollAreaHeight}}px);">
         <div layout="row" layout-wrap class="inset">
-          <div class="apis-box" flex="20" flex-gt-sm="20" flex-xs="50" flex-sm="33" ng-repeat="api in apisCtrl.apis | filter:searchAPIs track by api.id">
+          <div class="apis-box" flex="20" flex-gt-sm="20" flex-xs="50" flex-sm="33" ng-repeat="api in $ctrl.apis | filter:searchAPIs track by api.id">
             <a ui-sref="apis.portal.pages.page({apiId: api.id})">
               <md-card class="api-box gravitee-card gravitee-api-card">
                 <md-card-header layout="row" layout-align="end start">
                   <md-card-avatar>
-                    <md-button class="md-icon-button" ng-if="apisCtrl.isOwner(api) && !devMode"
+                    <md-button class="md-icon-button" ng-if="$ctrl.isOwner(api) && !devMode"
                                ng-click="$event.stopPropagation()" ui-sref="apis.admin.general.main({apiId: api.id})">
                       <md-tooltip>Manage this API</md-tooltip>
                       <ng-md-icon icon="settings" aria-label="{{::api.id}}" size="20"
@@ -68,13 +68,13 @@
                 </md-card-content>
                 <md-card-footer>
                   <div class="api-box-footer" layout="row" layout-align="end">
-                    <ng-md-icon ng-if="apisCtrl.syncStatus[api.id] === undefined?false:!apisCtrl.syncStatus[api.id]"
+                    <ng-md-icon ng-if="$ctrl.syncStatus[api.id] === undefined?false:!$ctrl.syncStatus[api.id]"
                                 icon="sync_problem" aria-label="async" size="20"
                                 style="fill: #e8ac3c;">
                       <md-tooltip>API out of sync</md-tooltip>
                     </ng-md-icon>
-                    <ng-md-icon icon="{{apisCtrl.getVisibilityIcon(api)}}" size="20" style="fill: #cdcdcd;">
-                      <md-tooltip>{{apisCtrl.getVisibility(api)}}</md-tooltip>
+                    <ng-md-icon icon="{{$ctrl.getVisibilityIcon(api)}}" size="20" style="fill: #cdcdcd;">
+                      <md-tooltip>{{$ctrl.getVisibility(api)}}</md-tooltip>
                     </ng-md-icon>
                     <ng-md-icon icon="person" size="20" style="fill: #cdcdcd;">
                       <md-tooltip>
@@ -93,23 +93,22 @@
     </md-card>
   </div>
 
-  <gravitee-empty-state ng-if="!isLoading && apisCtrl.apis.length == 0"
+  <gravitee-empty-state ng-if="!isLoading && $ctrl.apis.length == 0"
                         icon="dashboard"
                         model="API"
                         message="Hmmm, there is no API for you here :("
                         sub-message="{{!graviteeUser ? 'Login to get access to more APIs' : 'Start creating an API'}}"
-                        create-mode="apisCtrl.createMode"></gravitee-empty-state>
+                        create-mode="$ctrl.createMode"></gravitee-empty-state>
 
-  <div ng-if="!isLoading && apisCtrl.apis.length == 0" style="text-align: center;">
-    <md-button ng-if="!graviteeUser" class="md-raised" ng-click="apisCtrl.login()" aria-label="login">Login</md-button>
+  <div ng-if="!isLoading && $ctrl.apis.length == 0" style="text-align: center;">
+    <md-button ng-if="!graviteeUser" class="md-raised" ng-click="$ctrl.login()" aria-label="login">Login</md-button>
   </div>
 
-  <div ng-style="{'text-align': apisCtrl.apis.length == 0 ? 'center' : 'none' }">
+  <div ng-style="{'text-align': $ctrl.apis.length == 0 ? 'center' : 'none' }">
     <md-button ng-if="!devMode" gravitee-roles-allowed="ADMIN, API_PUBLISHER"
-               ng-class="{'md-fab-bottom-right gravitee-add-button': apisCtrl.apis.length > 0}" class="md-fab"
+               ng-class="{'md-fab-bottom-right gravitee-add-button': $ctrl.apis.length > 0}" class="md-fab"
                aria-label="create-api" ng-href="#/apis/new">
       <ng-md-icon icon="add" style="fill: #fff;"></ng-md-icon>
     </md-button>
   </div>
 </section>
-
