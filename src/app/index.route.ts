@@ -17,6 +17,7 @@ import ApiService from "./services/api.service";
 import ViewService from "./services/view.service";
 import ApplicationService from "./services/applications.service";
 import DocumentationService from "./services/apiDocumentation.service";
+import ViewService from "./services/view.service";
 
 function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
   'ngInject';
@@ -31,7 +32,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('apis', {
       abstract: true,
       url: '/apis',
-      templateUrl: 'app/api/apis.html',
+      template: '<div ui-view></div>',
       abstract: true
     })
     .state('apis.new', {
@@ -58,13 +59,22 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'ApisController',
       controllerAs: 'apisCtrl',
       resolve: {
+
         resolvedApis: function ($stateParams, ApiService) {
           if ($stateParams.view && $stateParams.view !== 'all') {
             return ApiService.list($stateParams.view);
           }
           return ApiService.list();
         },
-        resolvedViews: (ViewService: ViewService) => ViewService.list()
+        resolvedViews: (ViewService: ViewService) => {
+          return ViewService.list().then(response => {
+            let views = response.data;
+            let selectedIndex;
+            views.unshift({id: 'all', name: 'All APIs'});
+
+            return views;
+          });
+        }
       },
       data: {
         menu: {

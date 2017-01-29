@@ -22,8 +22,7 @@ class ApisController {
   private apisScrollAreaHeight: number;
   private isAPIsHome: boolean;
   private createMode: boolean;
-  private views: any;
-  private selectedIndex: any;
+  private selectedIndex: number;
   private apis: any;
   private devMode: boolean;
   private syncStatus: any;
@@ -54,17 +53,6 @@ class ApisController {
 
     this.views = resolvedViews.data;
     this.views.unshift({id: 'all', name: 'All APIs'});
-
-    let that = this;
-    $timeout(function () {
-      if (that.views.length && that.$state.params.view) {
-        that.selectedIndex = _.findIndex(that.views, (view) => {
-          return view.id === that.$state.params.view;
-        });
-      } else {
-        this.selectedIndex = 0;
-      }
-    });
 
     this.reloadSyncState();
 
