@@ -15,6 +15,9 @@
  */
 import ApiService from "./services/api.service";
 import ViewService from "./services/view.service";
+import ApplicationService from "./services/applications.service";
+import DocumentationService from "./services/apiDocumentation.service";
+
 function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
   'ngInject';
   $stateProvider
@@ -61,7 +64,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
           }
           return ApiService.list();
         },
-        resolvedViews: (ViewService; ViewService) => ViewService.list()
+        resolvedViews: (ViewService: ViewService) => ViewService.list()
       },
       data: {
         menu: {
@@ -108,8 +111,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'ApiPortalPageController',
       controllerAs: 'apiPortalPageCtrl',
       resolve: {
-        resolvedPage: function ($stateParams, DocumentationService) {
-          return DocumentationService.get($stateParams.apiId, $stateParams.pageId);
+        resolvedPage: function ($state: ng.ui.IStateService, DocumentationService: DocumentationService) {
+          return DocumentationService.get($state.params['apiId'], $state.params['pageId']);
         }
       },
       data: {
@@ -350,7 +353,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('applications', {
       url: '/applications',
-      templateUrl: 'app/application/applications.html'
+      templateUrl: 'app/application/applications.html',
+      abstract: true
     })
     .state('applications.list', {
       url: '/',
@@ -358,9 +362,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'ApplicationsController',
       controllerAs: 'applicationsCtrl',
       resolve: {
-        resolvedApplications: function (ApplicationService) {
-          return ApplicationService.list();
-        }
+        resolvedApplications: (ApplicationService: ApplicationService) => ApplicationService.list()
       },
       data: {
         menu: {
