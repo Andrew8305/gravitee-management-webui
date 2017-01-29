@@ -1,9 +1,6 @@
-/**
- *  Do not remove this comments bellow. It's the markers used by wiredep to inject
- *  sass dependencies when defined in the bower.json of your dependencies
- */
-// bower:scss
-// endbower
+@import 'user/_user.scss';
+@import 'application/details/_applications.scss';
+@import 'api/_api.scss';
 
 $backgroundColor: rgb(45,50,62);
 
