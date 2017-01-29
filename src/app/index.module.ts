@@ -160,6 +160,8 @@ import DeleteTenantDialogController from './configuration/admin/tenants/delete.t
 
 import angular = require("angular");
 
+import ViewsComponent from "./configuration/admin/views/views.component";
+
 angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
   'ngMessages', 'vAccordion', 'schemaForm', 'ngclipboard', 'ui.validate', 'gvConstants', 'angular-timeline',
@@ -290,6 +292,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .directive('graviteeDashboard', () => new DashboardDirective())
   .directive('graviteeTimeframe', () => new TimeframeDirective())
   .directive('graviteeAnalyticsFilter', () => new AnalyticsFilterDirective())
+  .component('views', ViewsComponent)
   .filter('humanDateFilter', function () {
     return function(input) {
       if (!moment().subtract(1, 'weeks').isAfter(input)) {
