@@ -596,11 +596,13 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       templateUrl: 'app/configuration/admin/tenants/tenants.html',
       controller: 'TenantsController',
       controllerAs: 'tenantsCtrl',
-      menu: {
-        label: 'Tenants',
-        icon: 'shuffle'
-      },
-      roles: ['ADMIN']
+      data: {
+        menu: {
+          label: 'Tenants',
+          icon: 'shuffle'
+        },
+        roles: ['ADMIN']
+      }
     })
     .state('configuration.admin.groups', {
       url: '/groups',

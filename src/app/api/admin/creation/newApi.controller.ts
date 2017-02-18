@@ -62,7 +62,10 @@ class NewApiController {
   private timeUnits: string[];
   private methods: string[];
   private resourceFiltering: {
-    whitelist: string[];
+    whitelist: {
+      pattern: string,
+      methods: string[]
+    }
   };
   private skippedStep: boolean;
   private apiSteps: any[];

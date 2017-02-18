@@ -22,9 +22,9 @@ class ApiEndpointController {
   private endpoint: any;
   private initialEndpoints: any;
   private initialEndpoint: any;
+  private tenants: any;
 
   constructor(private ApiService, private NotificationService, private $scope, private $rootScope, private $state, private $stateParams, private resolvedApi, private TenantService) {
-
     'ngInject';
 
     this.api = resolvedApi.data;

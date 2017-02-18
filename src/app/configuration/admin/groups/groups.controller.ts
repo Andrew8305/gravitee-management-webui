@@ -151,7 +151,7 @@ class GroupsController {
         _this.selectedGroup.members = _.unionWith(members, _this.selectedGroup.members, _.isEqual);
       }
     }, () => {
-      // You cancelled the dialog
+      // you cancelled the dialog
     });
   }
 
@@ -189,7 +189,7 @@ class GroupsController {
       if (response) {
         _this.GroupService.deleteMember(_this.selectedGroup.group.id, username).then( () => {
           _this.NotificationService.show('Member ' + username + ' has been removed from the group');
-          _.remove(_this.selectedGroup.members, (m) => {
+          _.remove(_this.selectedGroup.members, (m: any) => {
             return m.username === username;
           });
         });
@@ -199,7 +199,7 @@ class GroupsController {
 
   updateMember(member) {
     var _this = this;
-    this.GroupService.addOrUpdateMember(this.selectedGroup.group.id, member).then(()=>{
+    this.GroupService.addOrUpdateMember(this.selectedGroup.group.id, member).then( () => {
       _this.NotificationService.show('Member ' + member.username + ' has been updated');
     });
   }
