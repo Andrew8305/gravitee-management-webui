@@ -40,7 +40,7 @@ class NewApiController {
     showBusyText: boolean;
     stepData: {
       step: number;
-      label: string;
+      label?: string;
       completed: boolean;
       optional: boolean;
       data: any
@@ -53,19 +53,16 @@ class NewApiController {
     security: string;
     validation: string
     paths: {
-      [path: string]: [];
+      [path: string]: any[];
     }
   };
 
   private pages: any;
-  private securityTypes: {
-    id: string;
-    name: string
-  }[];
+  private securityTypes: { id: string; name: string }[];
   private timeUnits: string[];
   private methods: string[];
   private resourceFiltering: {
-    whitelist: string;
+    whitelist: string[];
   };
   private skippedStep: boolean;
   private apiSteps: any[];
@@ -73,7 +70,9 @@ class NewApiController {
   private importFileMode: boolean;
   private importURLMode: boolean;
   private apiDescriptorURL: string;
-
+  private endpoint: any;
+  private rateLimit: any;
+  private quota: any;
   constructor(private $scope, private $timeout, private $mdDialog, private $stateParams, private $window, private ApiService, private NotificationService) {
     'ngInject';
 
@@ -296,14 +295,21 @@ class NewApiController {
   }
 
   importSwagger() {
-    var _this = this;
-    var swagger = { version: 'VERSION_2_0' };
+    let _this = this;
+    let swagger;
+
     if (this.importFileMode) {
-      swagger.type = 'INLINE';
-      swagger.payload = this.$scope.importAPIFile.content;
+      swagger = {
+        version: 'VERSION_2_0',
+        type: 'INLINE',
+        payload: this.$scope.importAPIFile.content
+      }
     } else {
-      swagger.type = 'URL';
-      swagger.payload = this.apiDescriptorURL;
+      swagger = {
+        version: 'VERSION_2_0',
+        type: 'URL',
+        payload: this.apiDescriptorURL
+      }
     }
 
     this.ApiService.importSwagger(swagger).then(function (api) {
