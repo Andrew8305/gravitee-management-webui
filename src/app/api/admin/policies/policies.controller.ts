@@ -246,7 +246,6 @@ class ApiPoliciesController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove this policy ?',
-      msg: "",
       confirmButton: "Remove"
     }).then(function (response) {
       if (response) {
@@ -341,7 +340,6 @@ class ApiPoliciesController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove this path ?',
-      msg: "",
       confirmButton: "Remove"
     }).then(function (response) {
       if (response) {

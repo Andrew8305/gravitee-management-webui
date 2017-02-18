@@ -23,7 +23,6 @@ class GroupsController {
   private selectedGroup: any;
 
   constructor(
-    private $scope,
     private GroupService,
     private ApplicationService,
     private ApiService,
@@ -165,7 +164,6 @@ class GroupsController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Would you like to remove the group "' + groupName + '" ?',
-      msg: "",
       confirmButton: "Remove"
     }).then(function (response) {
       if (response) {

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import * as _ from 'lodash';
+
 interface IMember {
   username: string;
   type: string;

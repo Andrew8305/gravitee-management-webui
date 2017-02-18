@@ -33,21 +33,20 @@ class PageDirective {
 }
 
 class PageController {
-  constructor($scope, $rootScope, $state, DocumentationService, Constants) {
+
+  private MARKDOWN_PAGE = 'MARKDOWN';
+  private RAML_PAGE = 'RAML';
+  private SWAGGER_PAGE = 'SWAGGER';
+
+  private url: string;
+
+  constructor(private $scope, private $rootScope, private $state, private Constants) {
     'ngInject';
-    this.$scope = $scope;
-    this.$rootScope = $rootScope;
-    this.$state = $state;
-    this.DocumentationService = DocumentationService;
 
-    this.MARKDOWN_PAGE = 'MARKDOWN';
-    this.RAML_PAGE = 'RAML';
-    this.SWAGGER_PAGE = 'SWAGGER';
-
-    if (this.$scope.$parent.page === undefined) {
-      this.url = Constants.baseURL + 'apis/' + this.$state.params.apiId + '/pages/' + this.$state.params.pageId + '/content';
+    if ($scope.$parent.page === undefined) {
+      this.url = Constants.baseURL + 'apis/' + $state.params.apiId + '/pages/' + $state.params.pageId + '/content';
     } else {
-      this.url = Constants.baseURL + 'apis/' + this.$state.params.apiId + '/pages/' + this.$scope.$parent.page.id + '/content';
+      this.url = Constants.baseURL + 'apis/' + $state.params.apiId + '/pages/' + $scope.$parent.page.id + '/content';
     }
   }
 

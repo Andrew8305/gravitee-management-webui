@@ -67,19 +67,18 @@ class SubscriptionsController {
   }
 
   revoke(subscription, apiKey) {
-    var _this = this;
+    var that = this;
     this.$mdDialog.show({
       controller: 'DialogConfirmController',
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to revoke API Key \'' + apiKey + '\' ?',
-      msg: "",
       confirmButton: "Revoke"
     }).then(function (response) {
       if (response) {
-        _this.ApiService.revokeApiKey(_this.api.id, subscription.id, apiKey).then(() => {
-          _this.NotificationService.show('API Key ' + apiKey + ' has been revoked !');
+        that.ApiService.revokeApiKey(that.api.id, subscription.id, apiKey).then(() => {
+          that.NotificationService.show('API Key ' + apiKey + ' has been revoked !');
 
           this.refresh();
         });
@@ -190,6 +189,7 @@ class SubscriptionsController {
         controller: 'DialogSubscriptionCreateController',
         controllerAs: 'dialogSubscriptionCreateController',
         templateUrl: 'app/api/admin/subscriptions/subscription.create.dialog.html',
+        //TODO: plans is not known here
         plans: plans,
         clickOutsideToClose: true
       }).then( (data) => {

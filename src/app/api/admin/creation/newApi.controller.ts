@@ -40,13 +40,41 @@ class NewApiController {
     showBusyText: boolean;
     stepData: {
       step: number;
+      label: string;
       completed: boolean;
       optional: boolean;
       data: any
     }[]
   };
+  private contextPathInvalid: boolean;
+  private plan: {
+    name: string;
+    characteristics: any[];
+    security: string;
+    validation: string
+    paths: {
+      [path: string]: [];
+    }
+  };
 
-  constructor(private $stateParams, private $window, private ApiService, private NotificationService) {
+  private pages: any;
+  private securityTypes: {
+    id: string;
+    name: string
+  }[];
+  private timeUnits: string[];
+  private methods: string[];
+  private resourceFiltering: {
+    whitelist: string;
+  };
+  private skippedStep: boolean;
+  private apiSteps: any[];
+  private enableFileImport: boolean;
+  private importFileMode: boolean;
+  private importURLMode: boolean;
+  private apiDescriptorURL: string;
+
+  constructor(private $scope, private $timeout, private $mdDialog, private $stateParams, private $window, private ApiService, private NotificationService) {
     'ngInject';
 
     this.api = _.clone(this.$stateParams.api) !== null ? _.clone(this.$stateParams.api) : {};
@@ -55,8 +83,11 @@ class NewApiController {
     this.api.proxy.endpoints = [];
     this.api.pages = [];
     this.api.plans = [];
-    this.plan = {};
-    this.plan.characteristics = [];
+
+    this.plan = {
+      characteristics: []
+    };
+
     this.pages = {};
     this.securityTypes = [
       {
@@ -68,8 +99,10 @@ class NewApiController {
       }];
     this.timeUnits = ['SECONDS', 'MINUTES', 'HOURS', 'DAYS'];
     this.methods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS', 'TRACE', 'CONNECT'];
-    this.resourceFiltering = {};
-    this.resourceFiltering.whitelist = [];
+
+    this.resourceFiltering = {
+      whitelist: []
+    };
 
     // init steps settings
     this.initStepSettings();
@@ -331,9 +364,11 @@ class NewApiController {
    */
   selectEndpoint() {
     this.api.proxy.endpoints = [];
-    var endpoint = {};
-    endpoint.name = "default";
-    endpoint.target = this.endpoint;
+    var endpoint = {
+      name: 'default',
+      target: this.endpoint
+    };
+
     this.api.proxy.endpoints.push(endpoint);
 
     // set api step message
@@ -414,9 +449,12 @@ class NewApiController {
     var that = this;
     this.$scope.$watch('newApiPageFile.content', function (data) {
       if (data) {
-        var file = {};
-        file.name = that.$scope.newApiPageFile.name;
-        file.content = data;
+        var file = {
+          name: that.$scope.newApiPageFile.name,
+          content: data,
+          type: ''
+        };
+
         var fileExtension = file.name.split('.').pop().toUpperCase();
         switch (fileExtension) {
           case "MD" :
@@ -450,12 +488,14 @@ class NewApiController {
 
   selectFile(file) {
     if (file && !this.pageAlreadyExist(file.name)) {
-      var page = {};
-      page.fileName = file.name;
-      page.name = file.name;
-      page.content = file.content;
-      page.type = file.type;
-      page.published = false;
+      var page = {
+        fileName: file.name,
+        name: file.name,
+        content: file.content,
+        type: file.type,
+        published: false
+      };
+
       this.api.pages.push(page);
     }
   }

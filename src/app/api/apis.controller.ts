@@ -18,12 +18,13 @@ import * as _ from 'lodash';
 
 class ApisController {
 
+  private apis: any;
+  private views: any;
   private graviteeUIVersion: string;
   private apisScrollAreaHeight: number;
   private isAPIsHome: boolean;
   private createMode: boolean;
   private selectedIndex: number = 0;
-  // private apis: any;
   private devMode: boolean;
   private syncStatus: any;
   private NotificationService: any;
@@ -37,9 +38,7 @@ class ApisController {
     private Constants,
     private resolvedApis,
     private resolvedViews,
-    private ViewService,
-    private $q: ng.IQService,
-    private $timeout
+    private $q: ng.IQService
   ) {
     'ngInject';
 
@@ -133,7 +132,7 @@ class ApisController {
       if (response) {
         that.$state.go('apis.admin.general', {apiId: response.data.id}, {reload: true});
       }
-    })*/;
+    });
   }
 
   showImportSwaggerDialog() {

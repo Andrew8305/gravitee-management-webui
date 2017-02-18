@@ -15,10 +15,11 @@
  */
 class TenantService {
 
-  constructor($http, Constants) {
+  private tenantsURL: string;
+
+  constructor(private $http, Constants) {
     'ngInject';
-    this.$http = $http;
-    this.tenantsURL = Constants.baseURL + 'configuration/tenants/';
+    this.tenantsURL = `${Constants.baseURL}configuration/tenants/`;
   }
 
   list() {

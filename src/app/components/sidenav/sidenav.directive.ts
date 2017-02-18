@@ -31,7 +31,7 @@ class SideNavDirective {
 
 class SideNavController {
   private routeMenuItems: any;
-  constructor(private $rootScope, private $mdSidenav, private $mdDialog, private $scope, private $state, private UserService, private Constants) {
+  constructor(private $rootScope, private $mdSidenav, private $scope, private $state, private UserService, private Constants) {
     'ngInject';
     $rootScope.devMode = Constants.devMode;
     $rootScope.portalTitle = Constants.portalTitle;

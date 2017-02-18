@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import ApiService from "./services/api.service";
-import ViewService from "./services/view.service";
 import ApplicationService from "./services/applications.service";
 import DocumentationService from "./services/apiDocumentation.service";
 import ViewService from "./services/view.service";
@@ -32,8 +31,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('apis', {
       abstract: true,
       url: '/apis',
-      template: '<div ui-view></div>',
-      abstract: true
+      template: '<div ui-view></div>'
     })
     .state('apis.new', {
       url: '/new',
@@ -70,7 +68,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
             let views = response.data;
             views.unshift({id: 'all', name: 'All APIs'});
             return views;
-          })
+          });
+        }
       },
       data: {
         menu: {

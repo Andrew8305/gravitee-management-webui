@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as moment from 'moment';
 import * as _ from 'lodash';
 
 class DashboardController {
@@ -22,21 +21,18 @@ class DashboardController {
   private selectedAPIs: any[];
   private selectedApplications: any[];
   private selectedEventTypes: any[];
-  private beginDate: Date;
-  private endDate: Date;
-  private now: Date;
+  private lastFrom: any;
+  private lastTo: any;
   private analyticsData: any;
   private events: any;
   private query: any;
-  private timeframe: any;
 
   constructor(
     private EventsService,
     private AnalyticsService,
     private ApiService,
     private ApplicationService,
-    private $scope,
-    private $state,
+    private $scope
   ) {
     'ngInject';
     this.eventLabels = {};
@@ -44,11 +40,6 @@ class DashboardController {
     this.selectedAPIs = [];
     this.selectedApplications = [];
     this.selectedEventTypes = [];
-    /*
-    this.beginDate = moment().subtract(1, 'weeks').toDate();
-    this.endDate = moment().toDate();
-    this.now = moment().toDate();
-    */
 
     this.$scope.platformDashboard = [{
       col: 0,

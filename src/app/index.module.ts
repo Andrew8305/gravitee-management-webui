@@ -42,6 +42,7 @@ require('ng-showdown');
 require('angular-swagger-ui/dist/scripts/swagger-ui.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-yaml-parser.min.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-xml-formatter.min.js');
+require('highcharts');
 
 import '../constants';
 
@@ -157,8 +158,6 @@ import DialogDynamicProviderHttpController from './api/admin/properties/dynamic-
 import TenantsController from './configuration/admin/tenants/tenants.controller';
 import TenantService from './services/tenant.service';
 import DeleteTenantDialogController from './configuration/admin/tenants/delete.tenant.dialog.controller';
-
-import angular = require("angular");
 
 import ViewsComponent from "./configuration/admin/views/views.component";
 

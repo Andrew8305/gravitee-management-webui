@@ -13,9 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+
 class ApiPropertiesController {
 
   private api: any;
+  private dynamicPropertyService: any;
+  private dynamicPropertyProviders: [
+    {
+      id: 'HTTP',
+      name: 'Custom (HTTP)'
+    }
+  ];
+
+  private timeUnits: [ 'SECONDS', 'MINUTES', 'HOURS' ];
+
   constructor (
     private ApiService,
     private resolvedApi,
@@ -44,14 +56,6 @@ class ApiPropertiesController {
     };
 
     this.dynamicPropertyService = this.api.services && this.api.services['dynamic-property'];
-
-    this.timeUnits = [ 'SECONDS', 'MINUTES', 'HOURS' ];
-    this.dynamicPropertyProviders = [
-      {
-        id: 'HTTP',
-        name: 'Custom (HTTP)'
-      }
-    ];
 
     if (this.dynamicPropertyService !== undefined) {
       this.$scope.dynamicPropertyEnabled = this.dynamicPropertyService.enabled;

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TenantsController {
-  constructor($scope, TenantService, NotificationService, $q, $mdEditDialog, $mdDialog) {
-    'ngInject';
+import * as _ from 'lodash';
 
-    this.$scope = $scope;
-    this.TenantService = TenantService;
-    this.NotificationService = NotificationService;
-    this.$q = $q;
-    this.$mdEditDialog = $mdEditDialog;
-    this.$mdDialog = $mdDialog;
+class TenantsController {
+  private tenantsToCreate: any[];
+  private tenantsToUpdate: any[];
+  private initialTenants: any;
+  private tenants: any;
+
+  constructor(private $scope, private TenantService, private NotificationService, private $q, private $mdEditDialog, private $mdDialog) {
+    'ngInject';
 
     this.loadTenants();
     this.tenantsToCreate = [];
