@@ -112,7 +112,8 @@ class ApiMembersController {
       templateUrl: 'app/components/dialog/confirm.dialog.html',
       clickOutsideToClose: true,
       title: "Would you like to remove the member ?",
-      confirmButton: "Remove"
+      //TODO: confirmButton is not known here
+      //confirmButton: "Remove"
     }).then(function (response) {
       if (response) {
         self.deleteMember(member);

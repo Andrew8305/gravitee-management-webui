@@ -30,7 +30,7 @@ function DialogApiExportController($scope, $mdDialog, ApiService, apiId, base64)
   };
 
   $scope.export = function() {
-    var excludes = _.map(_.filter($scope.filteredFields, (fl) => { return !fl.checked; }), "id");
+    var excludes = _.map(_.filter($scope.filteredFields, (fl: any) => { return !fl.checked; }), "id");
     ApiService.export(apiId, excludes)
       .then( (response) => {
         var link = document.createElement('a');

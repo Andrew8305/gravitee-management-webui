@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+
 class DashboardDirective {
   constructor() {
     let directive = {
@@ -31,10 +33,8 @@ class DashboardDirective {
 }
 
 class DashboardController {
-  constructor($scope, $timeout, $rootScope) {
+  constructor(private $scope, private $timeout, private $rootScope) {
     'ngInject';
-
-    let _that = this;
 
     $scope.dashboardOptions = {
       margins: [10, 10],
@@ -53,8 +53,8 @@ class DashboardController {
       rowHeight: 330
     };
 
-    _.each(this.model, function(widget) {
-      widget.$uid = _that.guid();
+    _.each($scope.model, function(widget) {
+      widget.$uid = $scope.guid();
     });
 
     $timeout(function(){

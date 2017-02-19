@@ -74,7 +74,8 @@ class SubscriptionsController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to revoke API Key \'' + apiKey + '\' ?',
-      confirmButton: "Revoke"
+      //TODO: confirmButton is not known here
+      //confirmButton: "Revoke"
     }).then(function (response) {
       if (response) {
         that.ApiService.revokeApiKey(that.api.id, subscription.id, apiKey).then(() => {
@@ -167,8 +168,10 @@ class SubscriptionsController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to renew your API Key ?',
-      msg: "Your previous API Key will be no longer valid in 1 hour !",
-      confirmButton: "Renew"
+      //TODO: msg is not known here
+      //msg: "Your previous API Key will be no longer valid in 1 hour !",
+      //TODO: confirmButton is not known here
+      //confirmButton: "Renew"
     }).then(function (response) {
       if (response) {
         _this.ApiService.renewApiKey(apiId, subscription.id).then(() => {
@@ -183,14 +186,14 @@ class SubscriptionsController {
     var _this = this;
     this.ApiService.getPublishedApiPlans(this.api.id).then( (response) => {
       // Allow only subscribable plan
-      var plans = _.filter(response.data, (plan) => { return plan.security !== 'key_less'; });
+      var plans = _.filter(response.data, (plan: any) => { return plan.security !== 'key_less'; });
 
       _this.$mdDialog.show({
         controller: 'DialogSubscriptionCreateController',
         controllerAs: 'dialogSubscriptionCreateController',
         templateUrl: 'app/api/admin/subscriptions/subscription.create.dialog.html',
         //TODO: plans is not known here
-        plans: plans,
+        // plans: plans,
         clickOutsideToClose: true
       }).then( (data) => {
         if(data && data.applicationId && data.planId) {

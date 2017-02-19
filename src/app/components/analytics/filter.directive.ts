@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+
 class AnalyticsFilterDirective {
   constructor() {
 
@@ -29,20 +31,17 @@ class AnalyticsFilterDirective {
 }
 
 class AnalyticsFilterController {
-  constructor($scope, $rootScope) {
+  private fields: any;
+  private filters: any[];
+
+  constructor(private $scope, private $rootScope) {
     'ngInject';
-    this.$scope = $scope;
-    this.$rootScope = $rootScope;
 
-    this.fields = {};
-    this.filters = [];
-    let _that = this;
-
-    this.$rootScope.$on('filterItemChange', function (event, filter) {
+    $rootScope.$on('filterItemChange', function (event, filter) {
       if (filter.mode === 'add') {
-        _that.addFieldFilter(filter);
+        this.addFieldFilter(filter);
       } else if (filter.mode === 'remove') {
-        _that.removeFieldFilter(filter);
+        this.removeFieldFilter(filter);
       }
     });
   }

@@ -44,11 +44,8 @@ class UserAvatarDirective {
 }
 
 class UserAvatarController {
-  constructor($scope, $q, Constants) {
+  constructor(private $scope, private $q, private Constants) {
     'ngInject';
-    this.$scope = $scope;
-    this.$q = $q;
-    this.Constants = Constants;
   }
 }
 

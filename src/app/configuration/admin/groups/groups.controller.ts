@@ -163,8 +163,10 @@ class GroupsController {
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Would you like to remove the group "' + groupName + '" ?',
-      confirmButton: "Remove"
+      locals: {
+        title: 'Would you like to remove the group "' + groupName + '" ?',
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         _this.GroupService.remove(groupId).then( () => {
@@ -182,9 +184,11 @@ class GroupsController {
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Would you like to remove the user "' + username + '" ?',
-      msg: "",
-      confirmButton: "Remove"
+      locals: {
+        msg: '',
+        title: 'Would you like to remove the user "' + username + '" ?',
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         _this.GroupService.deleteMember(_this.selectedGroup.group.id, username).then( () => {

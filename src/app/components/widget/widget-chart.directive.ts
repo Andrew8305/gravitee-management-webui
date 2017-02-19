@@ -13,16 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class WidgetChartDirective {
-  constructor() {
-    this.restrict = 'E';
-    this.scope = {
-      chart: '=chart'
-    };
-    this.templateUrl = 'app/components/widget/widget-chart.html';
-  }
+import * as _ from 'lodash';
 
-  controller($scope) {
+class WidgetChartDirective {
+
+  constructor() {
+    let directive = {
+      restrict: 'E',
+      templateUrl: 'app/components/widget/widget-chart.html',
+      scope: {
+        chart: '=chart'
+      },
+      controller: WidgetChartController,
+      controllerAs: 'widgetChartCtrl',
+      link: function ($scope) {
+        // Refresh widget on each timeframe change
+        $scope.$on('timeframeChange', function (event, timeframe) {
+          let chart = $scope.chart;
+
+          // Associate the new timeframe to the chart request
+          _.assignIn(chart.request, {
+            interval: timeframe.interval,
+            from: timeframe.from,
+            to: timeframe.to
+          });
+
+          $scope.refresh();
+        });
+
+        $scope.$on('queryChange', function (event, query) {
+          let chart = $scope.chart;
+
+          // Associate the new query to the chart request
+          _.assignIn(chart.request, {
+            query: query.query
+          });
+
+          $scope.refresh();
+        });
+      }
+    };
+
+    return directive;
+  }
+}
+
+class WidgetChartController {
+  constructor(private $scope) {
     'ngInject';
 
     $scope.refresh = function() {
@@ -45,33 +82,6 @@ class WidgetChartDirective {
           $scope.results = response.data;
         });
     };
-  }
-
-  link(scope) {
-    // Refresh widget on each timeframe change
-    scope.$on('timeframeChange', function (event, timeframe) {
-      let chart = scope.chart;
-
-      // Associate the new timeframe to the chart request
-      _.assignIn(chart.request, {
-        interval: timeframe.interval,
-        from: timeframe.from,
-        to: timeframe.to
-      });
-
-      scope.refresh();
-    });
-
-    scope.$on('queryChange', function (event, query) {
-      let chart = scope.chart;
-
-      // Associate the new query to the chart request
-      _.assignIn(chart.request, {
-        query: query.query
-      });
-
-      scope.refresh();
-    });
   }
 }
 

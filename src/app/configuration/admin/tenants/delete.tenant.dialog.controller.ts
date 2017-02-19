@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function DialogConfirmController($scope, $mdDialog, title, msg, confirmButton) {
+function DeleteTenantDialogController($scope, $mdDialog: angular.material.IDialogService, tenant) {
   'ngInject';
 
-  $scope.title = title;
-  $scope.msg = msg;
-  $scope.confirmButton = confirmButton;
+  $scope.tenant = tenant.name;
 
-  this.cancel = function() {
-    $mdDialog.hide(false);
+  $scope.cancel = function() {
+    $mdDialog.cancel();
   };
 
-  this.confirm = function() {
+  $scope.ok = function() {
     $mdDialog.hide(true);
   };
 }
 
-export default DialogConfirmController;
+export default DeleteTenantDialogController;

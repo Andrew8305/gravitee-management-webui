@@ -61,7 +61,7 @@ class ApisController {
   }
 
   reloadSyncState() {
-    let promises = _.map(this.apis, (api) => {
+    let promises = _.map(this.apis, (api: any) => {
       if (this.isOwner(api) && !this.devMode) {
         return this.ApiService.isAPISynchronized(api.id)
           .then((sync) => { return sync; });
@@ -70,7 +70,7 @@ class ApisController {
 
     this.$q.all( _.filter( promises, ( p ) => { return p !== undefined; } ) )
       .then((syncList) => {
-        this.syncStatus = _.fromPairs(_.map(syncList, (sync) => {
+        this.syncStatus = _.fromPairs(_.map(syncList, (sync: any) => {
           return [sync.data.api_id, sync.data.is_synchronized];
         }));
       });

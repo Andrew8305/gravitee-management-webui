@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function DialogEditPolicyController($scope, $mdDialog, ApiService, NotificationService, locals) {
+function DialogEditPolicyController($scope, $mdDialog, locals) {
   'ngInject';
 
   $scope.description = locals.description;

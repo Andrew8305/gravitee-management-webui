@@ -130,7 +130,9 @@ class ApiResourcesController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove this resource ?',
       msg: "",
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         that.api.resources.splice(resourceIdx, 1);

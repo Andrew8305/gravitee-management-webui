@@ -13,20 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+
 class WidgetChartTableDirective {
   constructor() {
-    this.restrict = 'E';
-    this.scope = {
-      data: '=data'
+    let directive = {
+      restrict: 'E',
+      templateUrl: 'app/components/widget/widget-table.html',
+      scope: {
+        data: '@data'
+      },
+      controller: WidgetChartTableController,
+      controllerAs: 'widgetChartTableCtrl',
+      link: function($scope) {
+        $scope.$watch('data', function(data) {
+          if (data) {
+            $scope.paging = 1;
+            $scope.results = _.map(data.values, function (value, key) {
+              return {
+                key: key,
+                value: value,
+                metadata: (data && data.metadata) ? data.metadata[key] : undefined
+              };
+            });
+          }
+        }, true);
+      }
     };
-    this.templateUrl = 'app/components/widget/widget-table.html';
-  }
 
-  controller($scope) {
+    return directive;
+  }
+}
+
+class WidgetChartTableController {
+  constructor(private $scope) {
     'ngInject';
 
-    this.$scope = $scope;
-    this.$scope.selected = [];
+    $scope.selected = [];
 
     $scope.selectItem = function(item) {
       $scope.updateQuery(item, true);
@@ -45,21 +68,6 @@ class WidgetChartTableDirective {
         mode: (add) ? 'add' : 'remove'
       });
     };
-  }
-
-  link(scope) {
-    scope.$watch('data', function(data) {
-      if (data) {
-        scope.paging = 1;
-        scope.results = _.map(data.values, function (value, key) {
-          return {
-            key: key,
-            value: value,
-            metadata: (data && data.metadata) ? data.metadata[key] : undefined
-          };
-        });
-      }
-    }, true);
   }
 }
 

@@ -23,6 +23,7 @@ class ApiAdminController {
   private tags: any;
   private failoverEnabled: boolean;
   private contextPathEditable: boolean;
+  private formApi: any;
 
   constructor(
     private ApiService,
@@ -129,7 +130,9 @@ class ApiAdminController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to ' + (started ? 'stop' : 'start') + ' the API ?',
       msg: "",
-      confirmButton: (started ? 'stop' : 'start')
+      locals: {
+        confirmButton: (started ? 'stop' : 'start')
+      }
     }).then(function (response) {
       if (response) {
         if (started) {
@@ -192,7 +195,9 @@ class ApiAdminController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to delete endpoint(s) ?',
       msg: "",
-      confirmButton: "Delete"
+      locals: {
+        confirmButton: 'Delete'
+      }
     }).then(function (response) {
       if (response) {
         _(_that.$scope.selected).forEach(function (endpoint) {
@@ -224,7 +229,9 @@ class ApiAdminController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to delete \'' + this.api.name + '\' API ?',
       msg: "",
-      confirmButton: "Delete"
+      locals: {
+        confirmButton: 'Delete'
+      }
     }).then(function (response) {
       if (response) {
         that.ApiService.delete(id).then(() => {

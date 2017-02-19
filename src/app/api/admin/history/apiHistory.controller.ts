@@ -216,7 +216,8 @@ class ApiHistoryController {
       templateUrl: 'app/components/dialog/confirm.dialog.html',
       clickOutsideToClose: true,
       title: "Would you like to rollback your API ?",
-      confirmButton: "Rollback"
+      //TODO: confirmButton is not known here
+      //confirmButton: "Rollback"
     }).then(function (response) {
       if (response) {
         self.rollback(api);

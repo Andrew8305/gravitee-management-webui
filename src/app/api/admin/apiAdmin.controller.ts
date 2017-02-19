@@ -70,8 +70,9 @@ class ApiAdminController {
       templateUrl: 'app/components/dialog/confirm.dialog.html',
       clickOutsideToClose: true,
       title: "Would you like to deploy your API ?",
-      msg: "",
-      confirmButton: "OK"
+      locals: {
+        confirmButton: 'OK'
+      }
     }).then(function (response) {
       if (response) {
         self.deploy(api);

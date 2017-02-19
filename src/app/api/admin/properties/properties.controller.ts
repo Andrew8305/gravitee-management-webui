@@ -29,6 +29,11 @@ class ApiPropertiesController {
 
   private timeUnits: [ 'SECONDS', 'MINUTES', 'HOURS' ];
 
+  private controller: any;
+  private editor: any;
+
+  private joltSpecificationOptions: any;
+
   constructor (
     private ApiService,
     private resolvedApi,
@@ -78,14 +83,16 @@ class ApiPropertiesController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove property [' + key + '] ?',
       msg: "",
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
-        _.remove(that.api.properties, function(property) {
+        _.remove(that.api.properties, (property: any) => {
           return property.key === key;
         });
 
-        that.update(that.api);
+        that.update();
       }
     });
   }
@@ -104,7 +111,7 @@ class ApiPropertiesController {
 
       if (property) {
         that.api.properties.push(property);
-        that.update(that.api);
+        that.update();
       }
     });
   }
@@ -128,7 +135,7 @@ class ApiPropertiesController {
       save: function (input) {
         property.value = input.$modelValue;
         property.dynamic = false;
-        _that.update(_that.api);
+        _that.update();
       },
       targetEvent: event,
       validators: {
@@ -157,7 +164,6 @@ class ApiPropertiesController {
   }
 
   close() {
-    console.log(this.editor);
     this.$mdSidenav('dynamic-properties-config')
       .close();
   }

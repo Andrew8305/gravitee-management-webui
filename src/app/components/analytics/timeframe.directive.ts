@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as _ from 'lodash';
+import * as moment from 'moment';
+import internal = require("stream");
+
 class TimeframeDirective {
   constructor() {
 
@@ -28,28 +32,37 @@ class TimeframeDirective {
   }
 }
 
+interface Timeframe {
+  id: string,
+  title: string,
+  range: number,
+  interval: number
+}
+
 class TimeframeController {
-  constructor($scope, $rootScope, $state, $timeout) {
+  private now: Date;
+  private timeframes: Timeframe[];
+  private timeframe: Timeframe;
+  private pickerStartDate: Date;
+  private pickerEndDate: Date;
+
+  constructor(private $scope, private $rootScope, private $state, private $timeout) {
     'ngInject';
-    this.$scope = $scope;
+
     this.now = moment().toDate();
 
-    this.$scope.$on('timeframeReload', function () {
+    $scope.$on('timeframeReload', function () {
       let updated = false;
-      if (_that.$state.params.from && _that.$state.params.to) {
+      if ($state.params.from && $state.params.to) {
         updated = true;
-        _that.update({
-          from: _that.$state.params.from,
-          to: _that.$state.params.to
+        this.update({
+          from: $state.params.from,
+          to: $state.params.to
         });
       }
 
-      _that.setTimeframe(_that.$state.params.timeframe || '1d', ! updated);
+      this.setTimeframe($state.params.timeframe || '1d', ! updated);
     });
-
-    this.$state = $state;
-    this.$rootScope = $rootScope;
-    this.$timeout = $timeout;
 
     this.timeframes = [
       {
@@ -115,21 +128,19 @@ class TimeframeController {
       }
     ];
 
-    var _that = this;
-
     // Event received when a zoom is done on a chart
     this.$rootScope.$on('timeframeZoom', function (event, zoom) {
       let diff = zoom.to - zoom.from;
 
-      let timeframe = _.findLast(_that.timeframes, function(timeframe) {
+      let timeframe = _.findLast($scope.timeframes, function (timeframe: Timeframe) {
         return timeframe.range < diff;
       });
 
       if (!timeframe) {
-        timeframe = _that.timeframes[0];
+        timeframe = $scope.timeframes[0];
       }
 
-      _that.update({
+      this.update({
         interval: timeframe.interval,
         from: zoom.from,
         to: zoom.to
@@ -170,7 +181,7 @@ class TimeframeController {
   setTimeframe(timeframeId, update) {
     var that = this;
 
-    this.timeframe = _.find(this.timeframes, function (timeframe) {
+    this.timeframe = _.find(this.timeframes, function (timeframe: Timeframe) {
       return timeframe.id === timeframeId;
     });
 
@@ -185,19 +196,19 @@ class TimeframeController {
     }
   }
 
-  update(timeframe) {
+  update(timeframeParam) {
     let that = this;
 
-    timeframe = {
-      interval: parseInt(timeframe.interval),
-      from: parseInt(timeframe.from),
-      to: parseInt(timeframe.to)
+    let timeframe = {
+      interval: parseInt(timeframeParam.interval),
+      from: parseInt(timeframeParam.from),
+      to: parseInt(timeframeParam.to)
     };
 
     let diff = timeframe.to - timeframe.from;
 
-    let tf = _.findLast(that.timeframes, function(timeframe) {
-      return timeframe.range < diff;
+    let tf = _.findLast(that.timeframes, function (tframe: Timeframe) {
+      return tframe.range < diff;
     });
 
     if (!tf) {
@@ -228,7 +239,8 @@ class TimeframeController {
     this.$state.transitionTo(
       this.$state.current,
       _.merge(this.$state.params, {
-        timeframe: tf.timeframe,
+      // TODO: check if timeframe is reduired
+      //  timeframe: tf.timeframe,
         interval: timeframe.interval,
         from: timeframe.from,
         to: timeframe.to
@@ -247,7 +259,7 @@ class TimeframeController {
 
     let diff = to - from;
 
-    let timeframe = _.findLast(_that.timeframes, function(timeframe) {
+    let timeframe = _.findLast(_that.timeframes, function (timeframe: Timeframe) {
       return timeframe.range < diff;
     });
 

@@ -17,13 +17,16 @@ import _ = require('lodash');
 
 class AddPoliciesPathController {
   private newPath: {path: string; copyFromRootPath: boolean};
+  private paths: any;
+
   constructor(
     private $mdDialog: ng.material.IDialogService,
-    private paths,
+    private locals
   ) {
     'ngInject';
+    this.paths = locals.paths;
     this.newPath = {
-      path: "",
+      path: '',
       copyFromRootPath: true
     };
   }

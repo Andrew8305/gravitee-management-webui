@@ -46,15 +46,15 @@ class DashboardController {
       row: 0,
       sizeY: 1,
       sizeX: 3,
-      title: "Top API",
+      title: 'Top API',
       subhead: 'Ordered by API calls',
       chart: {
         type: 'table',
         columns: ['API', 'Hits'],
         paging: 5,
         request: {
-          type: "group_by",
-          field: "api",
+          type: 'group_by',
+          field: 'api',
           size: 10000
         }
       }
@@ -63,15 +63,15 @@ class DashboardController {
       row: 0,
       sizeY: 1,
       sizeX: 3,
-      title: "Top applications",
+      title: 'Top applications',
       subhead: 'Ordered by application calls',
       chart: {
         type: 'table',
         columns: ['Application', 'Hits'],
         paging: 5,
         request: {
-          type: "group_by",
-          field: "application",
+          type: 'group_by',
+          field: 'application',
           size: 10000
         }
       }
@@ -80,16 +80,16 @@ class DashboardController {
       row: 1,
       sizeY: 1,
       sizeX: 2,
-      title: "Top failed APIs",
+      title: 'Top failed APIs',
       subhead: 'Order by API 5xx status calls',
       chart: {
         type: 'table',
         columns: ['Application', 'Hits'],
         paging: 5,
         request: {
-          type: "group_by",
-          field: "api",
-          query: "status:[500 TO 599]",
+          type: 'group_by',
+          field: 'api',
+          query: 'status:[500 TO 599]',
           size: 10000
         }
       }
@@ -98,16 +98,16 @@ class DashboardController {
       row: 1,
       sizeY: 1,
       sizeX: 2,
-      title: "Top slow APIs",
+      title: 'Top slow APIs',
       subhead: 'Order by API response time calls',
       chart: {
         type: 'table',
         columns: ['API', 'Latency (in ms)'],
         paging: 5,
         request: {
-          type: "group_by",
-          field: "api",
-          order: "-avg:response-time",
+          type: 'group_by',
+          field: 'api',
+          order: '-avg:response-time',
           size: 10000
         }
       }
@@ -116,16 +116,16 @@ class DashboardController {
       row: 1,
       sizeY: 1,
       sizeX: 2,
-      title: "Top overhead APIs",
+      title: 'Top overhead APIs',
       subhead: 'Order by gateway latency',
       chart: {
         type: 'table',
         columns: ['API', 'Latency (in ms)'],
         paging: 5,
         request: {
-          type: "group_by",
-          field: "api",
-          order: "-avg:proxy-latency",
+          type: 'group_by',
+          field: 'api',
+          order: '-avg:proxy-latency',
           size: 10000
         }
       }
@@ -145,10 +145,10 @@ class DashboardController {
     });
 
     // init events
-    this.eventLabels.start_api = "Start";
-    this.eventLabels.stop_api = "Stop";
-    this.eventLabels.publish_api = "Deploy";
-    this.eventLabels.unpublish_api = "Undeploy";
+    this.eventLabels.start_api = 'Start';
+    this.eventLabels.stop_api = 'Stop';
+    this.eventLabels.publish_api = 'Deploy';
+    this.eventLabels.unpublish_api = 'Undeploy';
     this.eventTypes = ['START_API', 'STOP_API', 'PUBLISH_API', 'UNPUBLISH_API'];
 
     this.initPagination();
@@ -194,12 +194,12 @@ class DashboardController {
 
   searchEvents() {
     // set apis
-    let apis = this.selectedAPIs.map(function(api){ return api.id; }).join(",");
+    let apis = this.selectedAPIs.map(function(api){ return api.id; }).join(',');
     // set event types
     // TODO: types is type any[], and then string !!! beurk beurk beurk
     let types: any = this.eventTypes;
     if (this.selectedEventTypes.length > 0) {
-      types = this.selectedEventTypes.join(",");
+      types = this.selectedEventTypes.join(',');
     }
 
     // search

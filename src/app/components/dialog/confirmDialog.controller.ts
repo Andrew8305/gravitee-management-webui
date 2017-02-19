@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function DeleteTenantDialogController($scope, $mdDialog, tenant) {
+function DialogConfirmController($scope, $mdDialog, locals) {
   'ngInject';
 
-  $scope.tenant = tenant.name;
+  $scope.title = locals.title;
+  $scope.msg = locals.msg;
+  $scope.confirmButton = locals.confirmButton;
 
-  $scope.cancel = function() {
-    $mdDialog.cancel();
+  this.cancel = function() {
+    $mdDialog.hide(false);
   };
 
-  $scope.ok = function() {
+  this.confirm = function() {
     $mdDialog.hide(true);
   };
 }
 
-export default DeleteTenantDialogController;
+export default DialogConfirmController;

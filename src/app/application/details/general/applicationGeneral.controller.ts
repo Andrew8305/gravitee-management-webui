@@ -97,7 +97,9 @@ class ApplicationGeneralController {
       clickOutsideToClose: true,
       title: 'Would you like to delete your application?',
       msg: "",
-      confirmButton: "Delete"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         self.delete(self.application);

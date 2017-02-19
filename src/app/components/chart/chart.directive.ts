@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as _ from 'lodash';
-import * as Highcharts from 'highcharts';
+import * as Highcharts from "highcharts";
 
 class ChartDirective {
   constructor() {
@@ -86,7 +86,7 @@ class ChartDirective {
               chart = Highcharts.charts[i];
               if (chart) {
                 event = chart.pointer.normalize(e.originalEvent);
-                points = _.map(chart.series, function (serie) {
+                points = _.map(chart.series, (serie: any) => {
                   return serie.searchPoint(event, true);
                 });
                 points = _.filter(points, function (point) {
@@ -162,8 +162,10 @@ class ChartDirective {
             if (scope.type && scope.type.startsWith('area')) {
               newOptions.tooltip = {
                 formatter: function () {
-                  let s = '<b>' + Highcharts.dateFormat('%A, %b %d, %H:%M', new Date(this.x)) + '</b>';
-                  if (_.filter(this.points, function (point) {
+                  //TODO: check this
+                  //let s = '<b>' + Highcharts.dateFormat('%A, %b %d, %H:%M', new Date(this.x)) + '</b>';
+                  let s = '<b>' + Highcharts.dateFormat('%A, %b %d, %H:%M', this.x) + '</b>';
+                  if (_.filter(this.points, (point: any) => {
                       return point.y !== 0;
                     }).length) {
                     _.forEach(this.points, function (point) {

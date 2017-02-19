@@ -16,22 +16,6 @@
 import _ = require('lodash');
 class NewApiController {
 
-  /*
-  constructor($scope, $state, $stateParams, $window, $q, base64, $mdDialog, ApiService, NotificationService, DocumentationService, $timeout) {
-    'ngInject';
-    this.$scope = $scope;
-    this.$state = $state;
-    this.$stateParams = $stateParams;
-    this.$window = $window;
-    this.$q = $q;
-    this.base64 = base64;
-    this.$mdDialog = $mdDialog;
-    this.ApiService = ApiService;
-    this.NotificationService = NotificationService;
-    this.DocumentationService = DocumentationService;
-    this.$timeout = $timeout;
-   */
-
   private api: any;
   private vm: {
     selectedStep: number;
@@ -47,6 +31,8 @@ class NewApiController {
     }[]
   };
   private contextPathInvalid: boolean;
+  private plan: any;
+  /*
   private plan: {
     name: string;
     characteristics: any[];
@@ -56,16 +42,14 @@ class NewApiController {
       [path: string]: any[];
     }
   };
+  */
 
   private pages: any;
   private securityTypes: { id: string; name: string }[];
   private timeUnits: string[];
   private methods: string[];
-  private resourceFiltering: {
-    whitelist: {
-      pattern: string,
-      methods: string[]
-    }
+  private resourceFiltering:{
+    whitelist: any
   };
   private skippedStep: boolean;
   private apiSteps: any[];
@@ -76,6 +60,7 @@ class NewApiController {
   private endpoint: any;
   private rateLimit: any;
   private quota: any;
+
   constructor(private $scope, private $timeout, private $mdDialog, private $stateParams, private $window, private ApiService, private NotificationService) {
     'ngInject';
 
@@ -401,7 +386,7 @@ class NewApiController {
       '/': []
     };
     // set resource filtering whitelist
-    _.remove(this.resourceFiltering.whitelist, function (whitelistItem) {
+    _.remove(this.resourceFiltering.whitelist, (whitelistItem: any)  => {
       return !whitelistItem.pattern;
     });
     if (this.resourceFiltering.whitelist.length) {
@@ -510,7 +495,7 @@ class NewApiController {
   }
 
   pageAlreadyExist(pageFileName) {
-    return _.some(this.api.pages, function (page) {
+    return _.some(this.api.pages, (page: any) => {
       return page.fileName === pageFileName;
     });
   }
@@ -531,7 +516,7 @@ class NewApiController {
     this.$mdDialog
       .show(alert)
       .then(function () {
-        _.remove(that.api.pages, function (_page) {
+        _.remove(that.api.pages, (_page: any) => {
           return _page.fileName === page.fileName;
         });
       });

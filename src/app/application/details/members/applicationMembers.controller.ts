@@ -71,7 +71,9 @@ class ApplicationMembersController {
       clickOutsideToClose: true,
       title: 'Would you like to remove the member ?',
       msg: "",
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         self.deleteMember(member);

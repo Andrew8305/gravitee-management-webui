@@ -88,7 +88,9 @@ class ApplicationSubscriptionsController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to renew your API Key ?',
       msg: "Your previous API Key will be no longer valid in 1 hour !",
-      confirmButton: "Renew"
+      locals: {
+        confirmButton: 'Renew'
+      }
     }).then(function (response) {
       if (response) {
         _this.ApplicationService.renewApiKey(applicationId, subscription.id).then(() => {
@@ -108,7 +110,9 @@ class ApplicationSubscriptionsController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to revoke API Key \'' + apiKey + '\'?',
       msg: "",
-      confirmButton: "Revoke"
+      locals: {
+        confirmButton: 'Revoke'
+      }
     }).then(function (response) {
       if (response) {
         _this.ApplicationService.revokeApiKey(_this.application.id, subscription.id, apiKey).then(() => {

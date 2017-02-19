@@ -246,7 +246,9 @@ class ApiPoliciesController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove this policy ?',
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         _.forEach(that.apiPoliciesByPath[path], (policy, idx) => {
@@ -322,9 +324,10 @@ class ApiPoliciesController {
       parent: angular.element(document.body),
       targetEvent: event,
       clickOutsideToClose: true,
-      // TODO: paths & rootCtrl are not valid option keys
-      // paths: this.apiPoliciesByPath,
-      // rootCtrl: this
+      locals: {
+        paths: this.apiPoliciesByPath,
+        rootCtrl: this
+      }
     }).then( (paths) => {
       this.apiPoliciesByPath = paths;
     this.savePaths();
@@ -340,7 +343,9 @@ class ApiPoliciesController {
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove this path ?',
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         delete that.apiPoliciesByPath[path];

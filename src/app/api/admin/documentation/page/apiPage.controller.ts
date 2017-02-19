@@ -135,7 +135,9 @@ class PageController {
       clickOutsideToClose: true,
       title: 'Are you sure you want to remove the page "' + this.page.name + '" ?',
       msg: "",
-      confirmButton: "Remove"
+      locals: {
+        confirmButton: 'Remove'
+      }
     }).then(function (response) {
       if (response) {
         that.DocumentationService.deletePage(that.$scope.$parent.apiCtrl.api.id, that.page.id).then(function () {
