@@ -51,7 +51,6 @@ class ApisController {
     this.createMode = !$rootScope.devMode && Object.keys($rootScope.graviteeUser).length > 0;
 
     this.views = resolvedViews;
-    this.views.unshift({id: 'all', name: 'All APIs'});
 
     this.reloadSyncState();
 

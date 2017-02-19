@@ -51,17 +51,18 @@ class TimeframeController {
 
     this.now = moment().toDate();
 
+    let that = this;
     $scope.$on('timeframeReload', function () {
       let updated = false;
       if ($state.params.from && $state.params.to) {
         updated = true;
-        this.update({
+        that.update({
           from: $state.params.from,
           to: $state.params.to
         });
       }
 
-      this.setTimeframe($state.params.timeframe || '1d', ! updated);
+      that.setTimeframe($state.params.timeframe || '1d', ! updated);
     });
 
     this.timeframes = [

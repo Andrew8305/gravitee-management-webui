@@ -9,9 +9,12 @@
 @import 'api/admin/healthcheck/_healthcheck.scss';
 @import 'api/admin/history/_apiHistory.scss';
 @import 'api/admin/documentation/_apiDocumentation.scss';
+@import 'main/_main.scss';
+
+@import 'components/analytics/_analytics.scss';
 @import 'components/sidenav/_sidenav.scss';
 @import 'components/image/_image.scss';
-@import 'main/_main.scss';
+@import 'components/widget/_widget.scss';
 
 $backgroundColor: rgb(45,50,62);
 
