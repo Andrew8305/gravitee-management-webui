@@ -15,6 +15,7 @@
  */
 import * as _ from 'lodash';
 import * as Highcharts from "highcharts";
+import * as HighchartsMore from 'highcharts/highcharts-more';
 
 class ChartDirective {
   constructor() {
@@ -100,7 +101,7 @@ class ChartDirective {
               }
             }
           });
-          Highcharts.Pointer.prototype.reset = function () {
+          HighchartsMore.Pointer.prototype.reset = function () {
             let chart;
             for (let i = 0; i < Highcharts.charts.length; i++) {
               chart = Highcharts.charts[i];
@@ -114,7 +115,7 @@ class ChartDirective {
               }
             }
           };
-          Highcharts.Point.prototype.highlight = function (event) {
+          HighchartsMore.Point.prototype.highlight = function (event) {
             if (event.points.length) {
               this.onMouseOver();
               this.series.chart.tooltip.refresh(event.points);
@@ -234,7 +235,7 @@ class ChartDirective {
                   dataLabels: {
                     format: '<div style="text-align:center">' +
                     '<span style="font-size:25px;color:' +
-                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span><br/>' +
+                    ((HighchartsMore.theme && HighchartsMore.theme.contrastTextColor) || 'black') + '">{y}%</span><br/>' +
                     '<span style="font-size:12px;color:silver;">' + newOptions.series[0].name + '</span>' +
                     '</div>'
                   }

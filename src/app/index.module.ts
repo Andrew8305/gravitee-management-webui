@@ -43,6 +43,7 @@ require('angular-swagger-ui/dist/scripts/swagger-ui.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-yaml-parser.min.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-xml-formatter.min.js');
 require('highcharts');
+require('highcharts/highcharts-more');
 
 import '../constants';
 
