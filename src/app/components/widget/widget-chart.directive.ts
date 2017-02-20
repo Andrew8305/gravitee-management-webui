@@ -26,7 +26,7 @@ class WidgetChartDirective {
       },
       controller: WidgetChartController,
       controllerAs: 'widgetChartCtrl',
-      link: function ($scope) {
+      link: function ($scope, element, attributes, controller) {
         // Refresh widget on each timeframe change
         $scope.$on('timeframeChange', function (event, timeframe) {
           let chart = $scope.chart;
@@ -38,7 +38,7 @@ class WidgetChartDirective {
             to: timeframe.to
           });
 
-          $scope.refresh();
+          controller.refresh();
         });
 
         $scope.$on('queryChange', function (event, query) {
@@ -49,7 +49,7 @@ class WidgetChartDirective {
             query: query.query
           });
 
-          $scope.refresh();
+          controller.refresh();
         });
       }
     };
@@ -59,29 +59,35 @@ class WidgetChartDirective {
 }
 
 class WidgetChartController {
-  constructor(private $scope) {
+
+  private fetchData: boolean;
+  private results: any;
+  private widget: any;
+
+  constructor(
+    private $scope: ng.IScope) {
     'ngInject';
+  }
 
-    $scope.refresh = function() {
-      // Call the analytics service
-      $scope.fetchData = true;
+  refresh() {
+    // Call the analytics service
+    this.fetchData = true;
 
-      let chart = $scope.chart;
+    let chart = (this.$scope as any).chart;
 
-      // Prepare arguments
-      let args = [$scope.$parent.widget.root, chart.request];
+    // Prepare arguments
+    let args = [(this.$scope.$parent as any).widget.root, chart.request];
 
-      if (! $scope.$parent.widget.root) {
-        args.splice(0,1);
-      }
+    if (! (this.$scope.$parent as any).widget.root) {
+      args.splice(0,1);
+    }
 
-      chart.service.function
-        .apply(chart.service.caller, args)
-        .then(response => {
-          $scope.fetchData = false;
-          $scope.results = response.data;
-        });
-    };
+    chart.service.function
+      .apply(chart.service.caller, args)
+      .then(response => {
+        this.fetchData = false;
+        this.results = response.data;
+      });
   }
 }
 

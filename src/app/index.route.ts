@@ -17,6 +17,7 @@ import ApiService from "./services/api.service";
 import ApplicationService from "./services/applications.service";
 import DocumentationService from "./services/apiDocumentation.service";
 import ViewService from "./services/view.service";
+import InstancesService from "./services/instances.service";
 
 function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
   'ngInject';
@@ -430,9 +431,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'InstancesController',
       controllerAs: 'instancesCtrl',
       resolve: {
-        resolvedInstances: function (InstancesService) {
-          return InstancesService.list();
-        }
+        resolvedInstances: (InstancesService: InstancesService) => InstancesService.list()
       },
       data: {
         menu: {
