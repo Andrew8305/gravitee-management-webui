@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 'use strict';
-angular.module('gvConstants', []).constant('Constants', {
+import angular = require('angular');
+
+export const Constants = {
   // if the management REST API is on a different domain, put something like: http://demo.gravitee.io/management/
   'baseURL': '/management/',
   'version': '1.3.3',
   'portalTitle': 'Gravitee.io Portal',
   'devMode': false,
   'userCreationEnabled': true
-});
+};
+
+angular.module('gvConstants', []).constant('Constants', Constants);

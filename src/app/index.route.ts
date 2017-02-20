@@ -18,6 +18,7 @@ import ApplicationService from "./services/applications.service";
 import DocumentationService from "./services/apiDocumentation.service";
 import ViewService from "./services/view.service";
 import InstancesService from "./services/instances.service";
+import UserService from './services/user.service';
 
 function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
   'ngInject';
@@ -26,12 +27,35 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       'root',
       {
         abstract: true,
-        template: "<gravitee-sidenav></gravitee-sidenav><md-content ui-view layout='column' flex></md-content>",
+        template: "<div ui-view='sidenav'></div><md-content ui-view layout='column' flex></md-content>",
+        resolve: {
+          graviteeUser: function (UserService: UserService) {
+            'ngInject';
+            return UserService.current().then(user => user.data);
+          }
+        },
+      }
+    )
+    .state(
+      'withSidenav',
+      {
+        parent: 'root',
+        abstract: true,
+        views: {
+          'sidenav': {
+            component: 'graviteeSidenav',
+          },
+          '': {
+            template: '<div ui-view></div>'
+          }
+        },
+        resolve: {
+          reducedMode: ($stateParams: ng.ui.IStateParamsService) => $stateParams['reducedMode']
+        },
         params: {
           reducedMode: {
             type: "bool",
             value: true,
-            squash: true,
           }
         }
       }
@@ -46,7 +70,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state(
       'apis',
       {
-        parent: 'root',
+        parent: 'withSidenav',
         abstract: true,
         url: '/apis',
         template: '<div ui-view></div>'
@@ -345,7 +369,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       url: '/applications',
       templateUrl: 'app/application/applications.html',
       abstract: true,
-      parent: 'root'
+      parent: 'withSidenav'
     })
     .state('applications.list', {
       url: '/',
@@ -443,7 +467,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       abstract: true,
       url: '/instances',
       templateUrl: 'app/instances/instancesList.html',
-      parent: 'root'
+      parent: 'withSidenav'
     })
     .state('instances.list', {
       url: '/',
@@ -518,13 +542,13 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         },
         roles: ['ADMIN']
       },
-      parent: 'root'
+      parent: 'withSidenav'
     })
     .state('configuration', {
       abstract: true,
       template: '<div ui-view></div>',
       url: '/configuration',
-      parent: 'root'
+      parent: 'withSidenav'
     })
     .state('configuration.admin', {
       url: '/admin',
@@ -611,7 +635,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       url: '/login',
       templateUrl: 'app/login/login.html',
       controller: 'LoginController',
-      controllerAs: 'loginCtrl',
+      controllerAs: '$ctrl',
       data: {
         devMode: true
       }
@@ -634,13 +658,11 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         devMode: true
       }
     })
-    .state('logout',{
-      resolve: {
-        doLogout: (UserService, $state: ng.ui.IStateService) => {
-          return UserService.logout().then(
-            () => $state.go('login', { reducedMode: true })
-          );
-        }
+    .state('logout', {
+      controller: (UserService, $state: ng.ui.IStateService) => {
+        return UserService.logout().then(
+          () => $state.go('login')
+        );
       }
     });
 

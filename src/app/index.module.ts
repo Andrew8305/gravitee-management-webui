@@ -100,7 +100,7 @@ import ApplicationAnalyticsController from './application/details/analytics/anal
 import DialogApplicationController from './application/dialog/applicationDialog.controller';
 import DialogAddMemberController from './application/dialog/addMemberDialog.controller';
 import ApplicationService from './services/applications.service';
-import SideNavDirective from './components/sidenav/sidenav.directive';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import PageController from './api/admin/documentation/page/apiPage.controller';
 import PolicyService from './services/policy.service';
 import ResourceService from './services/resource.service';
@@ -275,7 +275,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .service('TagService', TagService)
   .service('TenantService', TenantService)
   .directive('filecontent', () => DocumentationDirective)
-  .directive('graviteeSidenav', () => new SideNavDirective())
+  .component('graviteeSidenav', SidenavComponent)
   .directive('graviteePage', () => new PageDirective())
   .directive('noDirtyCheck', () => new FormDirective())
   .directive('autofocus', () => new AutofocusDirective())

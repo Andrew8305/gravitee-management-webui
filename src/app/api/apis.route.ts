@@ -5,9 +5,8 @@ export default apisConfig;
 
 function apisConfig($stateProvider: ng.ui.IStateProvider) {
   'ngInject';
-  $stateProvider
-    .state('apis.new', {
-      url: '/new',
+  $stateProvider.state('apis.new', {
+      url: "/new",
       template: require('./admin/creation/newApi.html'),
       controller: 'NewApiController',
       controllerAs: 'newApiCtrl',

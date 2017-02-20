@@ -13,34 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function LoginController($scope, $mdDialog, $window, UserService, $rootScope, $state, Constants) {
-  'ngInject';
+import UserService from '../services/user.service';
+class LoginController {
+  user = {};
+  userCreationEnabled: boolean;
 
-  $scope.userCreationEnabled = Constants.userCreationEnabled;
-
-  $scope.goToHome = function (forceReload) {
-    if (forceReload) {
-      $window.location.href = $window.location.pathname;
-    } else {
-      $state.go('home');
-    }
-  };
-
-  if ($rootScope.graviteeUser) {
-    $scope.goToHome();
+  constructor(private UserService: UserService, private $state: ng.ui.IStateService, Constants) {
+    'ngInject';
+    this.userCreationEnabled = Constants.userCreationEnabled;
   }
 
-	$scope.user = {};
-
-  $scope.hide = function () {
-     $mdDialog.cancel();
-  };
-
-	$scope.login = function () {
-    UserService.login($scope.user).then(function() {
-      $scope.goToHome(true);
+	login($event: Event) {
+	  $event.preventDefault();
+    this.UserService.login(this.user).then(() => {
+      this.$state.go('home');
     });
-	};
+	}
 }
 
 export default LoginController;
