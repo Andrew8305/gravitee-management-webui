@@ -39,11 +39,14 @@ require('md-steppers');
 require('angular-ui-tree');
 require('angular-jwt');
 require('ng-showdown');
+require('showdown-prettify');
 require('angular-swagger-ui/dist/scripts/swagger-ui.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-yaml-parser.min.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger-xml-formatter.min.js');
+require('angular-swagger-ui/dist/scripts/modules/swagger1-to-swagger2-converter.min.js');
 require('highcharts');
 require('angular-gridster');
+require('js-yaml');
 
 import '../constants';
 

@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 import * as angular from 'angular';
+import ApplicationService from "../services/applications.service";
+import NotificationService from "../services/notification.service";
 
 class ApplicationsController {
   private applications: any;
 
   constructor(
-    private $window,
-    private $mdDialog,
-    private $state,
+    private $mdDialog: ng.material.IDialogService,
+    private $state: ng.ui.IStateService,
+    //TODO: should be typed
+    // private $rootScope: ng.IRootScopeService,
     private $rootScope,
-    private ApplicationService,
-    private NotificationService,
+    private ApplicationService: ApplicationService,
+    private NotificationService: NotificationService,
     private resolvedApplications
   ) {
 		'ngInject';
@@ -40,6 +43,7 @@ class ApplicationsController {
 	}
 
 	showAddApplicationModal(ev) {
+    let that = this;
     this.$mdDialog.show({
       controller: 'DialogApplicationController',
       templateUrl: 'app/application/dialog/application.dialog.html',
@@ -48,7 +52,7 @@ class ApplicationsController {
       clickOutsideToClose: true
     }).then(function (application) {
       if (application) {
-        this.$window.location.href = `#/applications/${application.data.id}/general`;
+        that.$state.go('applications.portal.general', {applicationId: application.data.id}, {reload: true});
       }
     }, function() {
        // You cancelled the dialog
