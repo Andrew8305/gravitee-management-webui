@@ -26,7 +26,7 @@ class ViewsController {
     private NotificationService,
     private $q,
     private $mdEditDialog,
-    private $mdDialog,
+    private $mdDialog
   ) {
     'ngInject';
 
