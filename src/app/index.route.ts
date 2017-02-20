@@ -660,8 +660,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('logout', {
       controller: (UserService, $state: ng.ui.IStateService) => {
-        return UserService.logout().then(
-          () => $state.go('login')
+        UserService.logout().then(
+          () => { $state.go('home'); }
         );
       }
     });
