@@ -35,6 +35,8 @@ class ApplicationSubscriptionsController {
     private ApiService: ApiService
   ) {
     'ngInject';
+
+    console.log('je suis ici');
     this.application = resolvedApplication.data;
     $scope.data = [];
     this.subscriptions = resolvedSubscriptions.data;

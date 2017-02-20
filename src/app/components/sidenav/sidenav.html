@@ -29,21 +29,21 @@
     </md-toolbar>
 
 		<md-list class="sidenav-list">
-      <md-list-item ng-repeat="menuItem in menuItems" ng-if="graviteeUser || menuItem.name === 'apis.list'">
-        <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" title="{{menuItem.menu.label}}"
+      <md-list-item ng-repeat="menuItem in sidenavCtrl.menuItems" ng-if="graviteeUser || menuItem.name === 'apis.list'">
+        <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" title="{{menuItem.data.menu.label}}"
            ng-class="{'sidenav-active':sidenavCtrl.$state.is(menuItem.name)}">
-          <ng-md-icon icon="{{menuItem.menu.icon}}"></ng-md-icon>
-          <span ng-if="!reducedMode">{{menuItem.menu.label}}</span>
+          <ng-md-icon icon="{{menuItem.data.menu.icon}}"></ng-md-icon>
+          <span ng-if="!reducedMode">{{menuItem.data.menu.label}}</span>
         </a>
       </md-list-item>
-      <hr ng-if="reducedMode && subMenuItems.length > 0">
+      <hr ng-if="reducedMode && sidenavCtrl.subMenuItems.length > 0">
       <md-list-item ng-if="!reducedMode">
         <h4>{{currentResource}}</h4>
       </md-list-item>
-      <md-list-item ng-repeat="menuItem in subMenuItems">
-        <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" ui-sref-active="sidenav-active" title="{{menuItem.menu.label}}">
-          <ng-md-icon icon="{{menuItem.menu.icon}}"></ng-md-icon>
-          <span ng-if="!reducedMode">{{menuItem.menu.label}}</span>
+      <md-list-item ng-repeat="menuItem in sidenavCtrl.subMenuItems">
+        <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" ui-sref-active="sidenav-active" title="{{menuItem.data.menu.label}}">
+          <ng-md-icon icon="{{menuItem.data.menu.icon}}"></ng-md-icon>
+          <span ng-if="!reducedMode">{{menuItem.data.menu.label}}</span>
         </a>
       </md-list-item>
     </md-list>

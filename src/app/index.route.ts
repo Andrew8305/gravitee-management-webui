@@ -178,19 +178,22 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       url: '/general',
       templateUrl: 'app/api/admin/general/apiGeneral.html',
       controller: 'ApiGeneralController',
-      controllerAs: 'generalCtrl'
+      controllerAs: 'generalCtrl',
+      data: {menu: null}
     })
     .state('apis.admin.general.gateway', {
       url: '/gateway',
       templateUrl: 'app/api/admin/general/apiGateway.html',
       controller: 'ApiGeneralController',
-      controllerAs: 'generalCtrl'
+      controllerAs: 'generalCtrl',
+      data: {menu: null}
     })
     .state('apis.admin.general.endpoint', {
       url: '/endpoint/:endpointName',
       templateUrl: 'app/api/admin/endpoint/endpointConfiguration.html',
       controller: 'ApiEndpointController',
-      controllerAs: 'endpointCtrl'
+      controllerAs: 'endpointCtrl',
+      data: {menu: null}
     })
     .state('apis.admin.plans', {
       url: '/plans?state',
@@ -307,13 +310,15 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       url: '/new?type',
       templateUrl: 'app/api/admin/documentation/page/apiPage.html',
       controller: 'PageController',
-      controllerAs: 'pageCtrl'
+      controllerAs: 'pageCtrl',
+      data: {menu: null}
     })
     .state('apis.admin.documentation.page', {
       url: '/:pageId',
       templateUrl: 'app/api/admin/documentation/page/apiPage.html',
       controller: 'PageController',
-      controllerAs: 'pageCtrl'
+      controllerAs: 'pageCtrl',
+      data: {menu: null}
     })
     .state('apis.admin.healthcheck', {
       url: '/healthcheck',

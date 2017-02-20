@@ -39,6 +39,17 @@ class ApisController {
     private resolvedApis,
     private resolvedViews,
     private $q: ng.IQService
+    /*
+     private ApiService,
+     private $mdDialog: angular.material.IDialogService,
+     private $scope: ng.IScope,
+     private $state: ng.ui.IStateService,
+     private $q: ng.IQService,
+     private $rootScope,
+     private Constants,
+     private resolvedApis,
+     private resolvedViews
+     */
   ) {
     'ngInject';
 

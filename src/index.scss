@@ -1,6 +1,39 @@
 @import './app/_constants';
 @import '~angular-material/angular-material';
+@import '~angular-material-data-table/dist/md-data-table.min';
+
+
 @import './app/index.scss';
+
+@import './app/_constants.scss';
+@import './app/main/_main.scss';
+@import './app/user/_user.scss';
+@import './app/policy/_policy.scss';
+
+@import './app/api/_api.scss';
+@import './app/api/admin/analytics/_analytics.scss';
+@import './app/api/admin/creation/_apiCreation.scss';
+@import './app/api/admin/documentation/_apiDocumentation.scss';
+@import './app/api/admin/events/_apiEvents.scss';
+@import './app/api/admin/healthcheck/_healthcheck.scss';
+@import './app/api/admin/history/_apiHistory.scss';
+@import './app/api/admin/members/_members.scss';
+@import './app/api/admin/plans/_apiPlans.scss';
+@import './app/api/admin/properties/_properties.scss';
+@import './app/api/admin/resources/_resources.scss';
+@import './app/api/admin/subscriptions/_subscriptions.scss';
+@import './app/api/portal/plan/_plan.scss';
+
+@import './app/application/details/_applications.scss';
+
+@import './app/components/analytics/_analytics.scss';
+@import './app/components/sidenav/_sidenav.scss';
+@import './app/components/image/_image.scss';
+@import './app/components/widget/_widget.scss';
+
+@import './app/instances/_instances.scss';
+
+@import './app/platform/dashboard/_dashboard.scss';
 
 body {
   background-color: lightgrey;
