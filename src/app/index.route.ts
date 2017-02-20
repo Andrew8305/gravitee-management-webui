@@ -30,7 +30,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         params: {
           reducedMode: {
             type: "bool",
-            value: true
+            value: true,
+            squash: true,
           }
         }
       }
@@ -42,6 +43,15 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         devMode: true
       }
     })
+    .state(
+      'apis',
+      {
+        parent: 'root',
+        abstract: true,
+        url: '/apis',
+        template: '<div ui-view></div>'
+      }
+    )
     .state('apis.portal', {
       abstract: true,
       url: '/:apiId',
@@ -56,6 +66,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('apis.portal.pages', {
       url: '/pages',
+      abstract: true,
       templateUrl: 'app/api/portal/documentation/apiPages.html',
       controller: 'ApiPortalPagesController',
       controllerAs: 'apiPortalPagesCtrl',
@@ -84,6 +95,13 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       },
       data: {
         devMode: true
+      },
+      params: {
+        pageId: {
+          type: 'string',
+          value: '',
+          squash: true
+        }
       }
     })
     .state('apis.portal.plans', {
