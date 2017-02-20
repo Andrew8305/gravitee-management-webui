@@ -506,7 +506,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       abstract: true,
       template: '<div ui-view></div>',
       url: '/configuration',
-      parent: 'root'g
+      parent: 'root'
     })
     .state('configuration.admin', {
       url: '/admin',
