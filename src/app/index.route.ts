@@ -21,6 +21,19 @@ import ViewService from "./services/view.service";
 function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
   'ngInject';
   $stateProvider
+    .state(
+      'root',
+      {
+        abstract: true,
+        template: "<gravitee-sidenav></gravitee-sidenav><md-content ui-view layout='column' flex></md-content>",
+        params: {
+          reducedMode: {
+            type: "bool",
+            value: true
+          }
+        }
+      }
+    )
     .state('home', {
       url: '/',
       redirectTo: 'apis.list',
@@ -598,6 +611,15 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controllerAs: 'confirmCtrl',
       data: {
         devMode: true
+      }
+    })
+    .state('logout',{
+      resolve: {
+        doLogout: (UserService, $state: ng.ui.IStateService) => {
+          return UserService.logout().then(
+            () => $state.go('login', { reducedMode: true })
+          );
+        }
       }
     });
 

@@ -74,8 +74,9 @@ class SideNavController {
 
     $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState) => {
       this.checkRedirectIfNotAllowed(toState, fromState, event);
-      this.subMenuItems = _.filter(this.routeMenuItems, function (routeMenuItem: any) {
-        var routeMenuItemSplitted = routeMenuItem.name.split('.'), toStateSplitted = toState.name.split('.');
+      this.subMenuItems = this.routeMenuItems.filter(function (routeMenuItem: any) {
+        let routeMenuItemSplitted = routeMenuItem.name.split('.'),
+            toStateSplitted = toState.name.split('.');
 
         return !routeMenuItem.data.menu.firstLevel &&
           routeMenuItemSplitted[0] === toStateSplitted[0] && routeMenuItemSplitted[1] === toStateSplitted[1];
@@ -100,10 +101,9 @@ class SideNavController {
   }
 
   loadMenuItems() {
-    var that = this;
-    this.menuItems = this.routeMenuItems.filter(function (routeMenuItem: any) {
-      var isMenuItem = routeMenuItem.data.menu.firstLevel && (!routeMenuItem.data.roles || that.UserService.isUserInRoles(routeMenuItem.data.roles));
-      if (that.$rootScope.devMode) {
+    this.menuItems = this.routeMenuItems.filter(routeMenuItem =>{
+      var isMenuItem = routeMenuItem.data.menu.firstLevel && (!routeMenuItem.data.roles || this.UserService.isUserInRoles(routeMenuItem.data.roles));
+      if (this.$rootScope.devMode) {
         return isMenuItem && routeMenuItem.devMode;
       } else {
         return isMenuItem;
@@ -113,13 +113,6 @@ class SideNavController {
 
   close() {
     this.$mdSidenav('left').close();
-  }
-
-  logout() {
-    var that = this;
-    this.UserService.logout().then(function () {
-      that.$rootScope.$broadcast('graviteeLogout');
-    });
   }
 
   isDisplayed() {

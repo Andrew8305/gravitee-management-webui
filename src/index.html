@@ -20,9 +20,7 @@
 
   <md-progress-linear ng-show="isLoading" md-mode="buffer" value="{{progressValue}}" md-buffer-value="{{progressValue}}"></md-progress-linear>
 
-  <div layout="row" flex>
-    <gravitee-sidenav></gravitee-sidenav>
-    <md-content ui-view layout="column" flex></md-content>
+  <div layout="row" flex ui-view>
   </div>
 </body>
 </html>

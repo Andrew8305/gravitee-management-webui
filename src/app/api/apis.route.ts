@@ -9,6 +9,7 @@ function apisConfig($stateProvider: ng.ui.IStateProvider) {
     .state(
       'apis',
       {
+        parent: 'root',
         abstract: true,
         url: '/apis',
         template: '<div ui-view></div>'

@@ -16,12 +16,12 @@
 
 -->
 <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-sidenav-theme" md-component-id="left" md-is-locked-open="true"
-  ng-class="{'md-sidenav-min': reducedMode}" style="overflow: inherit;" ng-if="sidenavCtrl.isDisplayed()">
+  ng-class="{'md-sidenav-min': $resolve.$stateParams.reducedMode}" style="overflow: inherit;" ng-if="sidenavCtrl.isDisplayed()">
     <md-toolbar class="navigation-header md-whiteframe-1dp" layout="row" layout-align="space-between center">
       <div class="logo" layout="row" layout-align="center center">
-        <img class="logo-image" ng-class="{'reduce-mode': reducedMode}"
+        <img class="logo-image" ng-class="{'reduce-mode': $resolve.$stateParams.reducedMode}"
              ng-click="sidenavCtrl.goToUserPage()" ng-src="{{graviteeUser.picture || 'app/images/GRAVITEE_LOGO1-01.png'}}" />
-				<span class="logo-text" ng-if="!reducedMode">
+				<span class="logo-text" ng-if="!$resolve.$stateParams.reducedMode">
           <strong>{{graviteeUser.firstname}} {{graviteeUser.lastname}}</strong>
           <strong ng-if="!(graviteeUser.firstname && graviteeUser.lastname)">{{graviteeUser.username}}</strong>
         </span>
@@ -34,32 +34,38 @@
         <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" title="{{menuItem.data.menu.label}}"
            ng-class="{'sidenav-active':sidenavCtrl.$state.is(menuItem.name)}">
           <ng-md-icon icon="{{menuItem.data.menu.icon}}"></ng-md-icon>
-          <span ng-if="!reducedMode">{{menuItem.data.menu.label}}</span>
+          <span ng-if="!$resolve.$stateParams.reducedMode">{{menuItem.data.menu.label}}</span>
         </a>
       </md-list-item>
-      <hr ng-if="reducedMode && sidenavCtrl.subMenuItems.length > 0">
-      <md-list-item ng-if="!reducedMode">
+      <hr ng-if="$resolve.$stateParams.Mode && sidenavCtrl.subMenuItems.length > 0">
+      <md-list-item ng-if="!$resolve.$stateParams.reducedMode">
         <h4>{{currentResource}}</h4>
       </md-list-item>
       <md-list-item ng-repeat="menuItem in sidenavCtrl.subMenuItems">
         <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" ui-sref-active="sidenav-active" title="{{menuItem.data.menu.label}}">
           <ng-md-icon icon="{{menuItem.data.menu.icon}}"></ng-md-icon>
-          <span ng-if="!reducedMode">{{menuItem.data.menu.label}}</span>
+          <span ng-if="!$resolve.$stateParams.reducedMode">{{menuItem.data.menu.label}}</span>
         </a>
       </md-list-item>
     </md-list>
     <md-list class="sidenav-footer">
       <md-list-item style="cursor: auto;">
-        <md-button class="md-fab md-mini sidenav-toggle" md-no-ink md-no-focus-style ng-click="$root.reducedMode = !$root.reducedMode" aria-label="Mini FAB">
-           <ng-md-icon class="sidenav-toggle-icon" size="16" icon="{{reducedMode?'chevron_right':'chevron_left'}}"></ng-md-icon>
+        <md-button
+          class="md-fab md-mini sidenav-toggle"
+          md-no-ink
+          md-no-focus-style
+          ui-sref="({reducedMode: !$resolve.$stateParams.reducedMode})"
+          aria-label="Mini FAB">
+           <ng-md-icon class="sidenav-toggle-icon" size="16" icon="{{$resolve.$stateParams.reducedMode?'chevron_right':'chevron_left'}}"></ng-md-icon>
+          <!--ng-click="$root.reducedMode = !$root.reducedMode"-->
         </md-button>
       </md-list-item>
       <md-list-item>
         <a ui-sref="login" ng-if="!graviteeUser">
-          <ng-md-icon icon="login"></ng-md-icon> <span ng-if="!reducedMode">Login</span>
+          <ng-md-icon icon="login"></ng-md-icon> <span ng-if="!$resolve.$stateParams.reducedMode">Login</span>
         </a>
-        <a href="javascript:void(0);" ng-click="sidenavCtrl.logout()" ng-if="graviteeUser">
-          <ng-md-icon icon="logout"></ng-md-icon> <span ng-if="!reducedMode">Sign out</span>
+        <a ui-sref="logout" ng-if="graviteeUser">
+          <ng-md-icon icon="logout"></ng-md-icon> <span ng-if="!$resolve.$stateParams.reducedMode">Sign out</span>
         </a>
       </md-list-item>
 		</md-list>

@@ -127,10 +127,6 @@ export class ApisController {
     return api.permission && (api.permission === 'owner' || api.permission === 'primary_owner');
   }
 
-  login() {
-    this.$rootScope.$broadcast("authenticationRequired");
-  }
-
   showImportDialog() {
     var that = this;
     this.$mdDialog.show({
