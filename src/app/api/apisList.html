@@ -109,7 +109,7 @@
   <div ng-style="{'text-align': $ctrl.apis.length == 0 ? 'center' : 'none' }">
     <md-button ng-if="!devMode" gravitee-roles-allowed="ADMIN, API_PUBLISHER"
                ng-class="{'md-fab-bottom-right gravitee-add-button': $ctrl.apis.length > 0}" class="md-fab"
-               aria-label="create-api" ng-href="#/apis/new">
+               aria-label="create-api" ui-sref="apis.new">
       <ng-md-icon icon="add" style="fill: #fff;"></ng-md-icon>
     </md-button>
   </div>
