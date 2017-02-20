@@ -29,7 +29,8 @@
     </md-toolbar>
 
 		<md-list class="sidenav-list">
-      <md-list-item ng-repeat="menuItem in sidenavCtrl.menuItems" ng-if="graviteeUser || menuItem.name === 'apis.list'">
+      <md-list-item ng-repeat="menuItem in sidenavCtrl.menuItems|orderBy:'data.menu.order' track by $index"
+                    ng-if="graviteeUser || menuItem.name === 'apis.list'">
         <a ui-sref="{{menuItem.name}}" ui-sref-opts="{reload: true}" title="{{menuItem.data.menu.label}}"
            ng-class="{'sidenav-active':sidenavCtrl.$state.is(menuItem.name)}">
           <ng-md-icon icon="{{menuItem.data.menu.icon}}"></ng-md-icon>

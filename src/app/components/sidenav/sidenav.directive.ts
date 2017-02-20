@@ -101,7 +101,7 @@ class SideNavController {
 
   loadMenuItems() {
     var that = this;
-    this.menuItems = _.filter(this.routeMenuItems, function (routeMenuItem: any) {
+    this.menuItems = this.routeMenuItems.filter(function (routeMenuItem: any) {
       var isMenuItem = routeMenuItem.data.menu.firstLevel && (!routeMenuItem.data.roles || that.UserService.isUserInRoles(routeMenuItem.data.roles));
       if (that.$rootScope.devMode) {
         return isMenuItem && routeMenuItem.devMode;

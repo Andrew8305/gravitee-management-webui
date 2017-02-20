@@ -56,7 +56,8 @@ function apisConfig($stateProvider: ng.ui.IStateProvider) {
         menu: {
           label: 'APIs',
           icon: 'dashboard',
-          firstLevel: true
+          firstLevel: true,
+          order: 10
         },
         devMode: true
       },

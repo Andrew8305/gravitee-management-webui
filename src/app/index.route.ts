@@ -326,7 +326,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         menu: {
           label: 'Applications',
           icon: 'list',
-          firstLevel: true
+          firstLevel: true,
+          order: 20
         },
         devMode: true
       }
@@ -424,7 +425,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         menu: {
           label: 'Instances',
           icon: 'developer_dashboard',
-          firstLevel: true
+          firstLevel: true,
+          order: 30
         },
         roles: ['ADMIN']
       }
@@ -479,7 +481,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         menu: {
           label: 'Dashboard',
           icon: 'show_chart',
-          firstLevel: true
+          firstLevel: true,
+          order: 40
         },
         roles: ['ADMIN']
       }
@@ -502,7 +505,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         menu: {
           label: 'Configuration',
           icon: 'settings',
-          firstLevel: true
+          firstLevel: true,
+          order: 50
         },
         roles: ['ADMIN']
       }
