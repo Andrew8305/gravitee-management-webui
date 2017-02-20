@@ -19,11 +19,15 @@ class InstancesController {
   private instances: any;
   private startedInstances: any;
   private _displayEmptyMode: boolean;
+  private displayAllInstances: boolean;
 
-  constructor(resolvedInstances, private $scope) {
+  constructor(
+    private resolvedInstances) {
 		'ngInject';
+
     this.instances = resolvedInstances.data;
-    this.$scope.displayAllInstances = false;
+
+    this.displayAllInstances = false;
     this.startedInstances = _.filter(this.instances, { 'state': 'started'});
     this._displayEmptyMode = this.startedInstances.length === 0;
 	}
@@ -34,7 +38,7 @@ class InstancesController {
     } else {
       this._displayEmptyMode = this.instances.length === 0;
     }
-    this.$scope.displayAllInstances = displayAllInstances;
+    this.displayAllInstances = displayAllInstances;
   }
 
   getOSIcon(osName) {

@@ -59,29 +59,36 @@ class WidgetChartDirective {
 }
 
 class WidgetChartController {
-  constructor(private $scope) {
+
+  private fetchData: boolean;
+  private results: any;
+  private chart: any;
+  private widget: any;
+
+  constructor(
+    private $scope: ng.IScope) {
     'ngInject';
+  }
 
-    $scope.refresh = function() {
-      // Call the analytics service
-      $scope.fetchData = true;
+  refresh() {
+    // Call the analytics service
+    this.fetchData = true;
 
-      let chart = $scope.chart;
+    let chart = this.chart;
 
-      // Prepare arguments
-      let args = [$scope.$parent.widget.root, chart.request];
+    // Prepare arguments
+    let args = [$scope.$parent.widget.root, chart.request];
 
-      if (! $scope.$parent.widget.root) {
-        args.splice(0,1);
-      }
+    if (! $scope.$parent.widget.root) {
+      args.splice(0,1);
+    }
 
-      chart.service.function
-        .apply(chart.service.caller, args)
-        .then(response => {
-          $scope.fetchData = false;
-          $scope.results = response.data;
-        });
-    };
+    chart.service.function
+      .apply(chart.service.caller, args)
+      .then(response => {
+        this.fetchData = false;
+        this.results = response.data;
+      });
   }
 }
 

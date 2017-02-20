@@ -19,6 +19,7 @@
   <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="50"></md-progress-circular>
 </div>
 
+<{{results}}>
 <div ng-if="!fetchData && results" ng-switch on="chart.type">
   <gravitee-chart-table ng-switch-when="table" data="results"></gravitee-chart-table>
   <gravitee-chart-pie ng-switch-when="pie" data="results"></gravitee-chart-pie>

@@ -23,6 +23,7 @@
       </tr>
     </thead>
     <tbody md-body>
+    {{results}}
       <tr ng-if="results.length > 0" class="gravitee-link" md-row
           ng-repeat="result in results | limitTo: $parent.chart.paging: (paging - 1) * $parent.chart.paging"
           md-auto-select md-select="result" md-select-id="key" style="height: 25px;"
