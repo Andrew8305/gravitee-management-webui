@@ -25,7 +25,7 @@ module.exports = {
         test: /\.(css|scss)$/,
         loaders: [
           'style-loader',
-          'css-loader',
+          'css-loader?importLoaders=1',
           'sass-loader',
           'postcss-loader'
         ]
@@ -49,6 +49,26 @@ module.exports = {
         loaders: [
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]'
         ]
+      },
+      {
+        test: /\.woff$/,
+        loader: 'url-loader?limit=10000&minetype=application/font-woff'
+      },
+      {
+        test: /\.woff2?$/,
+        loader: 'url-loader?limit=5000&minetype=application/font-woff'
+      },
+      {
+        test: /\.ttf$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.eot$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'file-loader'
       }
     ]
   },
