@@ -26,7 +26,7 @@ class WidgetChartDirective {
       },
       controller: WidgetChartController,
       controllerAs: 'widgetChartCtrl',
-      link: function ($scope) {
+      link: function ($scope, element, attributes, controller) {
         // Refresh widget on each timeframe change
         $scope.$on('timeframeChange', function (event, timeframe) {
           let chart = $scope.chart;
@@ -38,7 +38,7 @@ class WidgetChartDirective {
             to: timeframe.to
           });
 
-          $scope.refresh();
+          controller.refresh();
         });
 
         $scope.$on('queryChange', function (event, query) {
@@ -49,7 +49,7 @@ class WidgetChartDirective {
             query: query.query
           });
 
-          $scope.refresh();
+          controller.refresh();
         });
       }
     };
@@ -62,7 +62,6 @@ class WidgetChartController {
 
   private fetchData: boolean;
   private results: any;
-  private chart: any;
   private widget: any;
 
   constructor(
@@ -74,12 +73,12 @@ class WidgetChartController {
     // Call the analytics service
     this.fetchData = true;
 
-    let chart = this.chart;
+    let chart = (this.$scope as any).chart;
 
     // Prepare arguments
-    let args = [$scope.$parent.widget.root, chart.request];
+    let args = [(this.$scope.$parent as any).widget.root, chart.request];
 
-    if (! $scope.$parent.widget.root) {
+    if (! (this.$scope.$parent as any).widget.root) {
       args.splice(0,1);
     }
 

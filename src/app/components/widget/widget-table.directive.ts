@@ -21,7 +21,7 @@ class WidgetChartTableDirective {
       restrict: 'E',
       templateUrl: 'app/components/widget/widget-table.html',
       scope: {
-        data: '@data'
+        data: '=data'
       },
       controller: WidgetChartTableController,
       controllerAs: 'widgetChartTableCtrl',
@@ -46,29 +46,33 @@ class WidgetChartTableDirective {
 }
 
 class WidgetChartTableController {
-  constructor(private $scope) {
+
+  private selected: any[];
+  private widget: any;
+
+  constructor(
+    private $scope: ng.IScope) {
     'ngInject';
-
-    $scope.selected = [];
-
-    $scope.selectItem = function(item) {
-      $scope.updateQuery(item, true);
-    };
-
-    $scope.deselectItem = function(item) {
-      $scope.updateQuery(item, false);
-    };
-
-    $scope.updateQuery = function(item, add) {
-      $scope.$emit('filterItemChange', {
-        widget: $scope.$parent.$parent.$parent.$parent.widget.$uid,
-        field: $scope.$parent.chart.request.field,
-        key: item.key,
-        name: item.metadata.name,
-        mode: (add) ? 'add' : 'remove'
-      });
-    };
   }
+
+  selectItem(item) {
+    this.updateQuery(item, true);
+  };
+
+  deselectItem(item) {
+    this.updateQuery(item, false);
+  };
+
+  updateQuery(item, add) {
+    var that = this;
+    this.$scope.$emit('filterItemChange', {
+      widget: (that.$scope.$parent.$parent.$parent.$parent as any).widget.$uid,
+      field: (that.$scope.$parent as any).chart.request.field,
+      key: item.key,
+      name: item.metadata.name,
+      mode: (add) ? 'add' : 'remove'
+    });
+  };
 }
 
 export default WidgetChartTableDirective;
