@@ -24,7 +24,7 @@ export const SidenavComponent: ng.IComponentOptions = {
     reducedMode: '<'
   },
   controller: function($state: ng.ui.IStateService, UserService: UserService) {
-    console.log("sidenav controller");
+    this.$state = $state;
     this.menuItems = $state.get()
                          .filter(function (state: any) {
                            return !state.abstract && state.data && state.data.menu;
@@ -38,7 +38,6 @@ export const SidenavComponent: ng.IComponentOptions = {
                            // }
                          });
   }
-  //SideNavController,
 };
 
 class SideNavController {
