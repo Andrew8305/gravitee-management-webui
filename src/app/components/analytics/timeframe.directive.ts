@@ -24,7 +24,7 @@ class TimeframeDirective {
       restrict: 'E',
       templateUrl: 'app/components/analytics/timeframe.html',
       controller: TimeframeController,
-      controllerAs: 'timeframeCtrl',
+      controllerAs: '$ctrl',
       bindToController: true
     };
 
@@ -45,8 +45,13 @@ class TimeframeController {
   private timeframe: Timeframe;
   private pickerStartDate: Date;
   private pickerEndDate: Date;
+  private current: any;
 
-  constructor(private $scope, private $rootScope, private $state, private $timeout) {
+  constructor(
+    private $scope: ng.IScope,
+    private $rootScope,
+    private $state: ng.ui.IStateService,
+    private $timeout: ng.ITimeoutService) {
     'ngInject';
 
     this.now = moment().toDate();
@@ -54,15 +59,15 @@ class TimeframeController {
     let that = this;
     $scope.$on('timeframeReload', function () {
       let updated = false;
-      if ($state.params.from && $state.params.to) {
+      if ($state.params['from'] && $state.params['to']) {
         updated = true;
         that.update({
-          from: $state.params.from,
-          to: $state.params.to
+          from: $state.params['from'],
+          to: $state.params['to']
         });
       }
 
-      that.setTimeframe($state.params.timeframe || '1d', ! updated);
+      that.setTimeframe($state.params['timeframe'] || '1d', ! updated);
     });
 
     this.timeframes = [
@@ -133,12 +138,12 @@ class TimeframeController {
     this.$rootScope.$on('timeframeZoom', function (event, zoom) {
       let diff = zoom.to - zoom.from;
 
-      let timeframe = _.findLast($scope.timeframes, function (timeframe: Timeframe) {
+      let timeframe = _.findLast(that.timeframes, function (timeframe: Timeframe) {
         return timeframe.range < diff;
       });
 
       if (!timeframe) {
-        timeframe = $scope.timeframes[0];
+        timeframe = that.timeframes[0];
       }
 
       this.update({
@@ -149,6 +154,7 @@ class TimeframeController {
     });
 
     this.$rootScope.$on('queryUpdated', function (event, query) {
+      //TODO: what's the purpose of this ?
       console.log(query);
     });
   }
@@ -230,42 +236,42 @@ class TimeframeController {
       });
     }, 200);
 
-    this.$scope.current = {
+    this.current = {
       interval: tf.interval,
       intervalLabel: moment.duration(tf.interval).humanize(),
       from: timeframe.from,
       to: timeframe.to
     };
 
+    // TODO: by using transitionTo, the view is reloaded and requests are done twice
+    // TODO: must be fixed
     this.$state.transitionTo(
       this.$state.current,
       _.merge(this.$state.params, {
-      // TODO: check if timeframe is reduired
+      // TODO: check if timeframe is required
       //  timeframe: tf.timeframe,
         interval: timeframe.interval,
         from: timeframe.from,
         to: timeframe.to
       }),
-      {notify: false});
+      {notify: false, reload: false});
 
     this.pickerStartDate = moment(timeframe.from).toDate();
     this.pickerEndDate = moment(timeframe.to).toDate();
   }
 
   updateRangeDate() {
-    let _that = this;
-
-    let from =  moment(_that.pickerStartDate).startOf('day').unix() * 1000;
-    let to = moment(_that.pickerEndDate).endOf('day').unix() * 1000;
+    let from =  moment(this.pickerStartDate).startOf('day').unix() * 1000;
+    let to = moment(this.pickerEndDate).endOf('day').unix() * 1000;
 
     let diff = to - from;
 
-    let timeframe = _.findLast(_that.timeframes, function (timeframe: Timeframe) {
+    let timeframe = _.findLast(this.timeframes, function (timeframe: Timeframe) {
       return timeframe.range < diff;
     });
 
     if (!timeframe) {
-      timeframe = _that.timeframes[0];
+      timeframe = this.timeframes[0];
     }
 
     this.update({

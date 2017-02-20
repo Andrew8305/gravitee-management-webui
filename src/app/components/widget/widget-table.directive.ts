@@ -24,12 +24,12 @@ class WidgetChartTableDirective {
         data: '=data'
       },
       controller: WidgetChartTableController,
-      controllerAs: 'widgetChartTableCtrl',
-      link: function($scope) {
+      controllerAs: '$ctrl',
+      link: function($scope, element, attributes, controller) {
         $scope.$watch('data', function(data) {
           if (data) {
-            $scope.paging = 1;
-            $scope.results = _.map(data.values, function (value, key) {
+            controller.paging = 1;
+            controller.results = _.map(data.values, function (value, key) {
               return {
                 key: key,
                 value: value,
@@ -53,6 +53,7 @@ class WidgetChartTableController {
   constructor(
     private $scope: ng.IScope) {
     'ngInject';
+    this.selected = [];
   }
 
   selectItem(item) {

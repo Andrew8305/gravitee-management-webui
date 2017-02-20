@@ -21,7 +21,7 @@ class WidgetChartPieDirective {
       restrict: 'E',
       templateUrl: 'app/components/widget/widget-pie.html',
       scope: {
-        data: '@data'
+        data: '=data'
       },
       link: function($scope) {
         $scope.$watch('data', function(data) {
