@@ -28,65 +28,6 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
         devMode: true
       }
     })
-    .state('apis', {
-      abstract: true,
-      url: '/apis',
-      template: '<div ui-view></div>'
-    })
-    .state('apis.new', {
-      url: '/new',
-      templateUrl: 'app/api/admin/creation/newApi.html',
-      controller: 'NewApiController',
-      controllerAs: 'newApiCtrl',
-      params: {
-        api: null
-      }
-    })
-    .state('apis.create', {
-      url: '/new/create',
-      templateUrl: 'app/api/admin/creation/steps/steps.html',
-      controller: 'NewApiController',
-      controllerAs: 'newApiCtrl',
-      params: {
-        api: null
-      }
-    })
-    .state('apis.list', {
-      url: '/?view',
-      template: require('./api/apisList.html'),
-      controller: 'ApisController',
-      controllerAs: '$ctrl',
-      resolve: {
-        resolvedApis: function ($stateParams, ApiService) {
-          if ($stateParams.view && $stateParams.view !== 'all') {
-            return ApiService.list($stateParams.view);
-          }
-          return ApiService.list();
-        },
-        resolvedViews: (ViewService: ViewService) => {
-          return ViewService.list().then(response => {
-            let views = response.data;
-            views.unshift({id: 'all', name: 'All APIs'});
-            return views;
-          });
-        }
-      },
-      data: {
-        menu: {
-          label: 'APIs',
-          icon: 'dashboard',
-          firstLevel: true
-        },
-        devMode: true
-      },
-      params: {
-        view: {
-          type: 'string',
-          value: 'all',
-          squash: true
-        }
-      }
-    })
     .state('apis.portal', {
       abstract: true,
       url: '/:apiId',

@@ -161,6 +161,7 @@ import TenantService from './services/tenant.service';
 import DeleteTenantDialogController from './configuration/admin/tenants/delete.tenant.dialog.controller';
 
 import ViewsComponent from "./configuration/admin/views/views.component";
+import apisConfig from './api/apis.route';
 
 angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
@@ -168,6 +169,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   'utf8-base64',  'ngFileUpload', 'md-steppers', 'ui.tree', 'angular-jwt', 'gridster'])
   .config(config)
   .config(routerConfig)
+  .config(apisConfig)
   .config(interceptorConfig)
   .config(delegatorConfig)
   .config(function ($mdThemingProvider: ng.material.IThemingProvider) {
@@ -272,13 +274,13 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .service('SubscriptionService', SubscriptionService)
   .service('TagService', TagService)
   .service('TenantService', TenantService)
-  .directive('filecontent', DocumentationDirective)
+  .directive('filecontent', () => DocumentationDirective)
   .directive('graviteeSidenav', () => new SideNavDirective())
   .directive('graviteePage', () => new PageDirective())
   .directive('noDirtyCheck', () => new FormDirective())
   .directive('autofocus', () => new AutofocusDirective())
-  .directive('graviteeRolesAllowed', RoleDirective)
-  .directive('graviteeDiff', DiffDirective)
+  .directive('graviteeRolesAllowed', () => RoleDirective)
+  .directive('graviteeDiff', () => DiffDirective)
   .directive('graviteeImage', () => new ImageDirective())
   .directive('graviteeDashboardModel', () => new DashboardModelDirective())
   .directive('graviteeEmptyState', () => new EmptyStateDirective())

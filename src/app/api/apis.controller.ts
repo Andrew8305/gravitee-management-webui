@@ -16,10 +16,10 @@
 
 import * as _ from 'lodash';
 
-class ApisController {
+export class ApisController {
 
   private apis: any;
-  private views: any;
+  private views: any[];
   private graviteeUIVersion: string;
   private apisScrollAreaHeight: number;
   private isAPIsHome: boolean;
@@ -37,8 +37,9 @@ class ApisController {
     private $rootScope,
     private Constants,
     private resolvedApis,
-    private resolvedViews,
-    private $q: ng.IQService
+    private $q: ng.IQService,
+    private $timeout: ng.ITimeoutService,
+    resolvedViews: any[]
     /*
      private ApiService,
      private $mdDialog: angular.material.IDialogService,
@@ -57,7 +58,7 @@ class ApisController {
     this.apis = resolvedApis.data;
 
     this.apisScrollAreaHeight = this.$state.current.name === 'apis.list' ? 195 : 90;
-    this.isAPIsHome = this.$state.current.name.startsWith('apis') ? true : false;
+    this.isAPIsHome = this.$state.includes('apis');
 
     this.createMode = !$rootScope.devMode && Object.keys($rootScope.graviteeUser).length > 0;
 

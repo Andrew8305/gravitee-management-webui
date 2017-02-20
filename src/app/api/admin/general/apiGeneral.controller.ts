@@ -128,7 +128,7 @@ class ApiAdminController {
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Are you sure you want to ' + (started ? 'stop' : 'start') + ' the API ?',
+      title: `Are you sure you want to ${started ? "stop" : "start"} the API ?`,
       msg: "",
       locals: {
         confirmButton: (started ? 'stop' : 'start')
@@ -139,13 +139,13 @@ class ApiAdminController {
           that.ApiService.stop(id).then(function () {
             that.api.state = 'stopped';
             that.$scope.apiEnabled = false;
-            that.NotificationService.show('API ' + that.initialApi.name + ' has been stopped!');
+            that.NotificationService.show(`API ${that.initialApi.name} has been stopped!`);
           });
         } else {
           that.ApiService.start(id).then(function () {
             that.api.state = 'started';
             that.$scope.apiEnabled = true;
-            that.NotificationService.show('API ' + that.initialApi.name + ' has been started!');
+            that.NotificationService.show(`API ${that.initialApi.name} has been started!`);
           });
         }
       }
