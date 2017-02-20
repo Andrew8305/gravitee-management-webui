@@ -284,7 +284,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .directive('graviteeImage', () => new ImageDirective())
   .directive('graviteeDashboardModel', () => new DashboardModelDirective())
   .directive('graviteeEmptyState', () => new EmptyStateDirective())
-  .directive('graviteeChart', () => ChartDirective)
+  .directive('graviteeChart', () => new ChartDirective())
   .directive('graviteeUserAvatar', () => new UserAvatarDirective())
   .directive('graviteeWidget', () => new WidgetDirective())
   .directive('graviteeWidgetChart', () => new WidgetChartDirective())
