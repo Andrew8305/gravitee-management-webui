@@ -326,7 +326,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('applications', {
       url: '/applications',
       templateUrl: 'app/application/applications.html',
-      abstract: true
+      abstract: true,
+      parent: 'root'
     })
     .state('applications.list', {
       url: '/',
@@ -423,7 +424,8 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('instances', {
       abstract: true,
       url: '/instances',
-      templateUrl: 'app/instances/instancesList.html'
+      templateUrl: 'app/instances/instancesList.html',
+      parent: 'root'
     })
     .state('instances.list', {
       url: '/',
@@ -497,12 +499,14 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
           order: 40
         },
         roles: ['ADMIN']
-      }
+      },
+      parent: 'root'
     })
     .state('configuration', {
       abstract: true,
       template: '<div ui-view></div>',
-      url: '/configuration'
+      url: '/configuration',
+      parent: 'root'g
     })
     .state('configuration.admin', {
       url: '/admin',
