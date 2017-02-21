@@ -80,11 +80,10 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       resolve: {
         resolvedMembers: ($stateParams: ng.ui.IStateParamsService, ApplicationService: ApplicationService) =>
           ApplicationService.getMembers($stateParams['applicationId']).then(response => response.data),
-        resolvedGroupMembers: ($stateParams: ng.ui.IStateParamsService, resolvedApplication: any, GroupService: GroupService) => {
-          if (resolvedApplication.group && resolvedApplication.group.id) {
-            GroupService.getMembers(resolvedApplication.group.id).then(response => response.data)
-          }
-        }
+        resolvedGroupMembers: ($stateParams: ng.ui.IStateParamsService, resolvedApplication: any, GroupService: GroupService) =>
+          (resolvedApplication.group &&
+          resolvedApplication.group.id &&
+          GroupService.getMembers(resolvedApplication.group.id).then(response => response.data))
       },
       data: {
         menu: {
