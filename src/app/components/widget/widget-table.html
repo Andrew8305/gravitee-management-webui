@@ -26,7 +26,7 @@
       <tr ng-if="$ctrl.results.length > 0" class="gravitee-link" md-row
           ng-repeat="result in $ctrl.results | limitTo: $parent.chart.paging: ($ctrl.paging - 1) * $parent.chart.paging"
           md-auto-select md-select="result" md-select-id="key" style="height: 25px;"
-          md-on-select="$ctrl.selectItem" md-on-deselect="$ctrl.deselectItem">
+          md-on-select="selectItem" md-on-deselect="deselectItem">
         <td md-cell>
           <span ng-if="!result.metadata.deleted">
             {{result.metadata.name}} <small ng-if="result.metadata.version">({{result.metadata.version}})</small>
@@ -45,4 +45,4 @@
   </table>
 </md-table-container>
 <md-table-pagination class="gravitee-widget-pagination"
-  md-limit="$parent.chart.paging" md-page="$ctrl.paging" md-total="{{results.length}}"></md-table-pagination>
+  md-limit="$parent.chart.paging" md-page="$ctrl.paging" md-total="{{$ctrl.results.length}}"></md-table-pagination>

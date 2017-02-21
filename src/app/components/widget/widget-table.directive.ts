@@ -54,15 +54,15 @@ class WidgetChartTableController {
     private $scope: ng.IScope) {
     'ngInject';
     this.selected = [];
+
+    var that = this;
+    (this.$scope as any).selectItem = function (item) {
+      that.updateQuery(item, true);
+    };
+    (this.$scope as any).deselectItem = function (item) {
+      that.updateQuery(item, false);
+    };
   }
-
-  selectItem(item) {
-    this.updateQuery(item, true);
-  };
-
-  deselectItem(item) {
-    this.updateQuery(item, false);
-  };
 
   updateQuery(item, add) {
     var that = this;

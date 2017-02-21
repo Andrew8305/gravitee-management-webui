@@ -27,9 +27,9 @@ class ChartDirective {
       scope: {
         options: '=',
         type: '@',
-        zoom: '@',
-        height: '@',
-        width: '@'
+        zoom: '=',
+        height: '=',
+        width: '='
       },
       controller: ChartController,
       link: function (scope, element, attributes, controller) {

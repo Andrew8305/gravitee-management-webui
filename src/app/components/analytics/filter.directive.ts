@@ -37,11 +37,15 @@ class AnalyticsFilterController {
   constructor(private $scope, private $rootScope) {
     'ngInject';
 
+    this.fields = {};
+    this.filters = [];
+
+    var that = this;
     $rootScope.$on('filterItemChange', function (event, filter) {
       if (filter.mode === 'add') {
-        this.addFieldFilter(filter);
+        that.addFieldFilter(filter);
       } else if (filter.mode === 'remove') {
-        this.removeFieldFilter(filter);
+        that.removeFieldFilter(filter);
       }
     });
   }
