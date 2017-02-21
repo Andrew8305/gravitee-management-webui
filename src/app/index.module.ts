@@ -165,6 +165,7 @@ import DeleteTenantDialogController from './configuration/admin/tenants/delete.t
 
 import ViewsComponent from "./configuration/admin/views/views.component";
 import apisConfig from './api/apis.route';
+import applicationsConfig from './application/applications.route';
 
 angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
@@ -173,6 +174,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .config(config)
   .config(routerConfig)
   .config(apisConfig)
+  .config(applicationsConfig)
   .config(interceptorConfig)
   .config(delegatorConfig)
   .config(function ($mdThemingProvider: ng.material.IThemingProvider) {
