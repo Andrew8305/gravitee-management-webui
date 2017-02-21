@@ -26,6 +26,7 @@
     "angular-utf8-base64": "0.0.5",
     "api-console": "^2.0.4",
     "bootstrap": "^3.3.7",
+    "codemirror": "^5.24.0",
     "dragular": "^4.3.0",
     "highcharts": "^5.0.7",
     "js-yaml": "^3.8.1",

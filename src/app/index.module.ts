@@ -18,6 +18,7 @@ import 'angular-aria';
 import 'angular-animate';
 import 'angular-material';
 import 'angular-sanitize';
+
 // require('raml-parser');
 // require('api-console/dist/scripts/api-console');
 //require('api-console/dist/scripts/api-console-vendor');
@@ -26,9 +27,31 @@ require('angular-ui-codemirror');
 require('angular-material-data-table');
 require('angular-cookies');
 require('angular-messages');
+
+// Codemirror
+import * as CodeMirror from 'codemirror';
+(<any>window).CodeMirror = CodeMirror;
+
+require('codemirror/mode/xml/xml.js');
+require('codemirror/addon/edit/closetag.js');
+require('codemirror/addon/fold/xml-fold.js');
+require('codemirror/mode/javascript/javascript.js');
+require('codemirror/mode/groovy/groovy.js');
+require('codemirror/addon/search/search.js');
+require('codemirror/addon/search/searchcursor.js');
+require('codemirror/addon/search/jump-to-line.js');
+require('codemirror/addon/dialog/dialog.js');
+require('codemirror/addon/lint/lint.js');
+require('codemirror/addon/lint/json-lint.js');
+require('codemirror/addon/lint/yaml-lint.js');
+require('codemirror/addon/display/placeholder.js');
+
 require('dragular');
 require('v-accordion');
 require('angular-schema-form');
+require('./libraries/angular-schema-form/boostrap-decorator');
+require('./libraries/angular-schema-form/codemirror-decorator');
+require('angular-ui-codemirror');
 require('ngclipboard');
 require('angular-ui-validate');
 require('read-more/js/directives/readmore');

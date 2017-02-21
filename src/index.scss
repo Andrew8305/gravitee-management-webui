@@ -4,6 +4,11 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~angular-gridster/dist/angular-gridster.min.css';
 @import '~angular-swagger-ui/dist/css/swagger-ui.min.css';
+@import '~dragular/dist/dragular';
+
+@import '~codemirror/lib/codemirror';
+@import '~codemirror/addon/dialog/dialog';
+@import '~codemirror/addon/lint/lint';
 
 @import './app/index.scss';
 

@@ -19,6 +19,7 @@ function runBlock($rootScope, $window, $http, $mdSidenav, UserService, swaggerMo
   'ngInject';
 
   function configureScreenSize(user) {
+    /*
     if (screen.width < 500) {
       $rootScope.percentWidth = 100;
     } else if (screen.width < 770) {
@@ -27,6 +28,7 @@ function runBlock($rootScope, $window, $http, $mdSidenav, UserService, swaggerMo
       $rootScope.percentWidth = 33;
     }
     $rootScope.reducedMode = $rootScope.percentWidth > 33 || !user;
+    */
   }
 
   UserService.current().then(function (user) {
