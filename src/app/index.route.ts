@@ -376,7 +376,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
       controller: 'InstancesController',
       controllerAs: 'instancesCtrl',
       resolve: {
-        resolvedInstances: (InstancesService: InstancesService) => InstancesService.list()
+        resolvedInstances: (InstancesService: InstancesService) => InstancesService.list().then(response => response.data)
       },
       data: {
         menu: {

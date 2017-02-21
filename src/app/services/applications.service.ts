@@ -32,11 +32,11 @@ class ApplicationService {
     return `${this.applicationsURL}${applicationId}/subscriptions/`;
   }
 
-	get(applicationId: string) {
+	get(applicationId: string): ng.IHttpPromise<any> {
     return this.$http.get(this.applicationsURL + applicationId);
   }
 
-	getMembers(applicationId) {
+	getMembers(applicationId): ng.IHttpPromise<any> {
 		return this.$http.get(this.applicationsURL + applicationId + '/members');
 	}
 
@@ -45,11 +45,11 @@ class ApplicationService {
     return this.$http.post(url, '');
 	}
 
-	deleteMember(applicationId, memberUsername) {
+	deleteMember(applicationId, memberUsername): ng.IHttpPromise<any> {
 		return this.$http.delete(this.applicationsURL + applicationId + '/members?user=' + memberUsername);
 	}
 
-  list() {
+  list(): ng.IHttpPromise<any> {
     return this.$http.get(this.applicationsURL);
   }
 
@@ -57,11 +57,11 @@ class ApplicationService {
     return this.$http.get(this.applicationsURL + "?group=" + group);
   }
 
-	create(application) {
+	create(application): ng.IHttpPromise<any> {
     return this.$http.post(this.applicationsURL, application);
   }
 
-  update(application) {
+  update(application): ng.IHttpPromise<any> {
     return this.$http.put(
       this.applicationsURL + application.id,
       {
@@ -73,8 +73,8 @@ class ApplicationService {
     );
   }
 
-  delete(application): ng.IHttpPromise<any> {
-    return this.$http.delete(this.applicationsURL + application.id);
+  delete(applicationId: string): ng.IHttpPromise<any> {
+    return this.$http.delete(this.applicationsURL + applicationId);
   }
 
   search(query) {
@@ -87,7 +87,7 @@ class ApplicationService {
     return this.$http.post(this.subscriptionsURL(applicationId) + '?plan=' + planId, '');
   }
 
-  listSubscriptions(applicationId, planId) {
+  listSubscriptions(applicationId: string, planId?: string) {
     var url = this.subscriptionsURL(applicationId);
     if (planId) {
       url = url + '?plan=' + planId;

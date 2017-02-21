@@ -15,34 +15,20 @@
  */
 class ApplicationController {
   private application: any;
+
   constructor(
     private resolvedApplication,
-    private $state,
-    private $scope,
-    private $rootScope,
-    private UserService
+    private $rootScope
   ) {
 		'ngInject';
-		this.application = resolvedApplication.data;
+		this.application = resolvedApplication;
 
     $rootScope.currentResource = this.application.name;
-
-		this.selectTab();
 	}
 
 	isOwner() {
     return this.application.permission && (this.application.permission === 'owner' || this.application.permission === 'primary_owner');
   }
-
-	selectTab() {
-	  if (this.$state.current.name.endsWith('general')) {
-      this.$scope.selectedTab = 0;
-    } else if (this.$state.current.name.endsWith('subscriptions')) {
-      this.$scope.selectedTab = 1;
-    } else if (this.$state.current.name.endsWith('members')) {
-      this.$scope.selectedTab = 2;
-    }
-	}
 }
 
 export default ApplicationController;

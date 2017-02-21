@@ -15,6 +15,9 @@
  */
 import * as angular from 'angular';
 
+import ApplicationService from '../../../services/applications.service';
+import NotificationService from '../../../services/notification.service';
+
 class ApplicationMembersController {
   private application: any;
   private members: any;
@@ -24,76 +27,68 @@ class ApplicationMembersController {
   constructor(
     private resolvedApplication,
     private resolvedMembers,
-    private ApplicationService,
-    private GroupService,
-    private NotificationService,
-    private $mdDialog
+    private resolvedGroupMembers,
+    private ApplicationService: ApplicationService,
+    private NotificationService: NotificationService,
+    private $mdDialog: angular.material.IDialogService,
+    private $state: ng.ui.IStateService
   ) {
     'ngInject';
-    this.application = resolvedApplication.data;
-    this.members = resolvedMembers.data;
+    this.application = resolvedApplication;
+    this.members = resolvedMembers;
+    this.groupMembers = resolvedGroupMembers;
     this.membershipTypes = [ 'owner', 'user' ];
-
-    if (this.application.group) {
-      GroupService.getMembers(this.application.group.id).then((members) => {
-        this.groupMembers = members.data;
-      });
-    }
-  }
-
-  getMembers(applicationId) {
-    this.ApplicationService.getMembers(applicationId).then(response => {
-      this.members = response.data;
-    });
   }
 
   updateMember(member) {
     this.ApplicationService.addOrUpdateMember(this.application.id, member).then(() => {
-      this.NotificationService.show('Member ' + member.username + " has been updated with role " + member.type);
+      this.NotificationService.show(`Member ${member.username} has been updated with role ${member.type}`);
     });
   }
 
   deleteMember(member) {
-    var index = this.members.indexOf(member);
+    let index = this.members.indexOf(member);
     this.ApplicationService.deleteMember(this.application.id, member.username).then(() => {
       this.members.splice(index, 1);
-      this.NotificationService.show("Member " + member.username + " has been removed");
+      this.NotificationService.show(`${member.username} has been removed`);
     });
   }
 
   showDeleteMemberConfirm(ev, member) {
     ev.stopPropagation();
-    var self = this;
+    let that = this;
     this.$mdDialog.show({
       controller: 'DialogConfirmController',
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirm.dialog.html',
       clickOutsideToClose: true,
-      title: 'Would you like to remove the member ?',
-      msg: "",
       locals: {
+        title: 'Would you like to remove the member ?',
+        msg: '',
         confirmButton: 'Remove'
       }
     }).then(function (response) {
       if (response) {
-        self.deleteMember(member);
+        that.deleteMember(member);
       }
     });
   }
 
   showAddMemberModal(ev) {
-    var that = this;
+    let that = this;
     this.$mdDialog.show({
       controller: 'DialogAddMemberController',
       templateUrl: 'app/application/dialog/addMember.dialog.html',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
-      application: that.application,
-      applicationMembers : that.members
+      locals: {
+        application: that.application,
+        applicationMembers: that.members
+      }
     }).then(function (application) {
       if (application) {
-        that.getMembers(application.id);
+        that.$state.go('applications.portal.members', {applicationId: that.application.id}, {reload: true});
       }
     }, function() {
        // You cancelled the dialog

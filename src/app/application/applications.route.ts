@@ -1,4 +1,5 @@
 import ApplicationService from "../services/applications.service";
+import GroupService from "../services/group.service";
 
 export default applicationsConfig;
 
@@ -17,7 +18,8 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       controller: 'ApplicationsController',
       controllerAs: 'applicationsCtrl',
       resolve: {
-        resolvedApplications: (ApplicationService: ApplicationService) => ApplicationService.list()
+        resolvedApplications: (ApplicationService: ApplicationService) =>
+          ApplicationService.list().then(response => response.data)
       },
       data: {
         menu: {
@@ -36,16 +38,15 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       controller: 'ApplicationController',
       controllerAs: 'applicationCtrl',
       resolve: {
-        resolvedApplication: function ($stateParams, ApplicationService) {
-          return ApplicationService.get($stateParams.applicationId);
-        }
+        resolvedApplication: ($stateParams: ng.ui.IStateParamsService, ApplicationService: ApplicationService) =>
+          ApplicationService.get($stateParams['applicationId']).then(response => response.data)
       }
     })
     .state('applications.portal.general', {
       url: '/general',
       templateUrl: 'app/application/details/general/applicationGeneral.html',
       controller: 'ApplicationGeneralController',
-      controllerAs: 'applicationGeneralCtrl',
+      controllerAs: '$ctrl',
       data: {
         menu: {
           label: 'Global settings',
@@ -58,11 +59,10 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       url: '/subscriptions',
       templateUrl: 'app/application/details/subscriptions/applicationSubscriptions.html',
       controller: 'ApplicationSubscriptionsController',
-      controllerAs: 'applicationSubscriptionsCtrl',
+      controllerAs: '$ctrl',
       resolve: {
-        resolvedSubscriptions: function ($stateParams, ApplicationService) {
-          return ApplicationService.listSubscriptions($stateParams.applicationId);
-        }
+        resolvedSubscriptions: ($stateParams: ng.ui.IStateParamsService, ApplicationService: ApplicationService) =>
+          ApplicationService.listSubscriptions($stateParams['applicationId']).then(response => response.data)
       },
       data: {
         menu: {
@@ -76,10 +76,14 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       url: '/members',
       templateUrl: 'app/application/details/members/applicationMembers.html',
       controller: 'ApplicationMembersController',
-      controllerAs: 'applicationMembersCtrl',
+      controllerAs: '$ctrl',
       resolve: {
-        resolvedMembers: function ($stateParams, ApplicationService) {
-          return ApplicationService.getMembers($stateParams.applicationId);
+        resolvedMembers: ($stateParams: ng.ui.IStateParamsService, ApplicationService: ApplicationService) =>
+          ApplicationService.getMembers($stateParams['applicationId']).then(response => response.data),
+        resolvedGroupMembers: ($stateParams: ng.ui.IStateParamsService, resolvedApplication: any, GroupService: GroupService) => {
+          if (resolvedApplication.group && resolvedApplication.group.id) {
+            GroupService.getMembers(resolvedApplication.group.id).then(response => response.data)
+          }
         }
       },
       data: {
@@ -94,7 +98,7 @@ function applicationsConfig($stateProvider: ng.ui.IStateProvider) {
       url: '/analytics?from&to',
       templateUrl: 'app/application/details/analytics/analytics.html',
       controller: 'ApplicationAnalyticsController',
-      controllerAs: 'analyticsCtrl',
+      controllerAs: '$ctrl',
       data: {
         menu: {
           label: 'Analytics',

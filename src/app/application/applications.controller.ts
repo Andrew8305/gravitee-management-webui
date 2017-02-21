@@ -31,12 +31,12 @@ class ApplicationsController {
     private resolvedApplications
   ) {
 		'ngInject';
-		this.applications = resolvedApplications.data;
+		this.applications = resolvedApplications;
 	}
 
 	createInitApplication() {
 		if (!this.$rootScope.graviteeUser) {
-			this.$rootScope.$broadcast("authenticationRequired");
+			this.$rootScope.$broadcast('authenticationRequired');
 		} else {
 			this.showAddApplicationModal(null);
 		}

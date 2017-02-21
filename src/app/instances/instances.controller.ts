@@ -15,31 +15,42 @@
  */
 import * as _ from 'lodash';
 
+interface IInstancesScope extends ng.IScope {
+
+  switchDisplayInstances(): void;
+
+  displayAllInstances: boolean;
+}
+
 class InstancesController {
   private instances: any;
   private startedInstances: any;
   private _displayEmptyMode: boolean;
-  private displayAllInstances: boolean;
+  private searchGatewayInstances: string;
 
   constructor(
-    private resolvedInstances) {
+    private resolvedInstances,
+    private $scope: IInstancesScope) {
 		'ngInject';
 
-    this.instances = resolvedInstances.data;
-
-    this.displayAllInstances = false;
+    this.instances = resolvedInstances;
+    this.searchGatewayInstances = '';
     this.startedInstances = _.filter(this.instances, { 'state': 'started'});
     this._displayEmptyMode = this.startedInstances.length === 0;
-	}
 
-	switchDisplayInstances(displayAllInstances) {
-    if (!displayAllInstances) {
-      this._displayEmptyMode = this.startedInstances.length === 0;
-    } else {
-      this._displayEmptyMode = this.instances.length === 0;
-    }
-    this.displayAllInstances = displayAllInstances;
-  }
+    this.$scope.displayAllInstances = false;
+
+    let that = this;
+    this.$scope.switchDisplayInstances = function() {
+      $scope.displayAllInstances = !$scope.displayAllInstances;
+
+      if (!$scope.displayAllInstances) {
+        that._displayEmptyMode = that.startedInstances.length === 0;
+      } else {
+        that._displayEmptyMode = that.instances.length === 0;
+      }
+    };
+	}
 
   getOSIcon(osName) {
     if (osName) {

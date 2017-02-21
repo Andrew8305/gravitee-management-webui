@@ -17,10 +17,10 @@
 -->
 <section layout="column" flex>
   <md-content flex layout-padding>
-    <div layout="column" ng-if="applicationMembersCtrl.application.group">
-      <h4>Members inherited from group "{{applicationMembersCtrl.application.group.name}}"</h4>
+    <div layout="column" ng-if="$ctrl.application.group">
+      <h4>Members inherited from group "{{$ctrl.application.group.name}}"</h4>
       <md-content style="background: none">
-        <md-table-container ng-show="applicationMembersCtrl.members.length > 0">
+        <md-table-container ng-show="$ctrl.members.length > 0">
           <table md-table>
             <thead md-head md-order="order">
             <tr md-row>
@@ -30,7 +30,7 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="member in applicationMembersCtrl.groupMembers | orderBy: order">
+            <tr md-row ng-repeat="member in $ctrl.groupMembers | orderBy: order">
               <td md-cell> {{member.firstname}} {{member.lastname}} [{{member.username}}] </td>
               <td md-cell> {{member.email}} </td>
               <td md-cell> {{member.type}} </td>
@@ -42,13 +42,13 @@
     </div>
     <div layout="column">
       <h4>Members
-        <md-button class="md-icon-button" aria-label="Members Info" ng-click="applicationMembersCtrl.showPermissionsInformation()">
+        <md-button class="md-icon-button" aria-label="Members Info" ng-click="$ctrl.showPermissionsInformation()">
           <ng-md-icon icon="info" style="fill: #b1bdc5; top: 0;"></ng-md-icon>
         </md-button>
       </h4>
       <span flex></span>
       <md-content style="background: none">
-        <md-table-container ng-show="applicationMembersCtrl.members.length > 1">
+        <md-table-container ng-show="$ctrl.members.length > 1">
           <table md-table>
             <thead md-head md-order="order">
             <tr md-row>
@@ -59,7 +59,7 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="member in applicationMembersCtrl.members | orderBy: order">
+            <tr md-row ng-repeat="member in $ctrl.members | orderBy: order">
               <td md-cell ng-switch="member.type">
             <span ng-switch-when="primary_owner">
               <b>{{member.firstname}} {{member.lastname}} [{{member.username}}]</b>
@@ -70,8 +70,8 @@
                 {{member.email}}
               </td>
               <td md-cell ng-show="member.type != 'primary_owner' && applicationCtrl.isOwner() && member.username != graviteeUser.username">
-                <md-select ng-model="member.type" placeholder="Other" ng-change="applicationMembersCtrl.updateMember(member)">
-                  <md-option ng-value="type" ng-repeat="type in applicationMembersCtrl.membershipTypes">{{type}}</md-option>
+                <md-select ng-model="member.type" placeholder="Other" ng-change="$ctrl.updateMember(member)">
+                  <md-option ng-value="type" ng-repeat="type in $ctrl.membershipTypes">{{type}}</md-option>
                 </md-select>
               </td>
               <td md-cell ng-hide="member.type != 'primary_owner' && applicationCtrl.isOwner() && member.username != graviteeUser.username">
@@ -79,22 +79,22 @@
               </td>
               <td md-cell>
                 <div ng-if="member.type != 'primary_owner' && applicationCtrl.isOwner() && member.username != graviteeUser.username">
-                  <ng-md-icon ng-click="applicationMembersCtrl.showDeleteMemberConfirm($event, member)" icon="delete" size="24" style="cursor: pointer;"></ng-md-icon>
+                  <ng-md-icon ng-click="$ctrl.showDeleteMemberConfirm($event, member)" icon="delete" size="24" style="cursor: pointer;"></ng-md-icon>
                 </div>
               </td>
             </tr>
             </tbody>
           </table>
         </md-table-container>
-        <gravitee-empty-state ng-if="applicationMembersCtrl.members.length <= 1"
+        <gravitee-empty-state ng-if="$ctrl.members.length <= 1"
                               icon="group"
                               model="Member"
                               message="Members will appear here"
                               sub-message="Start attaching a member"
                               create-mode="true"></gravitee-empty-state>
 
-        <div ng-if="applicationCtrl.isOwner()" ng-style="applicationMembersCtrl.members.length <= 1 && {'text-align':'center'}">
-          <md-button ng-class="{'md-fab-bottom-right gravitee-add-button': applicationMembersCtrl.members.length > 1}" class="md-fab" aria-label="Add" ng-click="applicationMembersCtrl.showAddMemberModal($event)">
+        <div ng-if="applicationCtrl.isOwner()" ng-style="$ctrl.members.length <= 1 && {'text-align':'center'}">
+          <md-button ng-class="{'md-fab-bottom-right gravitee-add-button': $ctrl.members.length > 1}" class="md-fab" aria-label="Add" ng-click="$ctrl.showAddMemberModal($event)">
             <ng-md-icon icon="add"></ng-md-icon>
           </md-button>
         </div>

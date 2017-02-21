@@ -95,7 +95,7 @@ import DocumentationDirective from './api/admin/documentation/apiDocumentation.d
 import DocumentationController from './api/admin/documentation/apiDocumentation.controller';
 import DocumentationService from './services/apiDocumentation.service';
 import ApplicationsController from './application/applications.controller';
-import ApplicationController from './application/details/applications.controller';
+import ApplicationController from './application/details/application.controller';
 import ApplicationGeneralController from './application/details/general/applicationGeneral.controller';
 import ApplicationMembersController from './application/details/members/applicationMembers.controller';
 import ApplicationSubscriptionsController from './application/details/subscriptions/applicationSubscriptions.controller';

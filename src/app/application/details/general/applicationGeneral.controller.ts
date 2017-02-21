@@ -15,59 +15,54 @@
  */
 import * as _ from 'lodash';
 
+import ApplicationService from '../../../services/applications.service';
+import NotificationService from '../../../services/notification.service';
+import GroupService from '../../../services/group.service';
+import UserService from '../../../services/user.service';
+
+interface IApplicationScope extends ng.IScope {
+  formApplication: any;
+}
+
 class ApplicationGeneralController {
 
   private application: any;
   private groups: any[];
   private initialApplication: any;
+
   constructor(
     private resolvedApplication,
-    private ApplicationService,
-    private NotificationService,
-    private GroupService,
-    private UserService,
-    private $state,
-    private $scope,
-    private $mdDialog,
+    private ApplicationService: ApplicationService,
+    private NotificationService: NotificationService,
+    private GroupService: GroupService,
+    private UserService: UserService,
+    private $state: ng.ui.IStateService,
+    private $scope: IApplicationScope,
+    private $mdDialog: angular.material.IDialogService,
     private $rootScope
   ) {
     'ngInject';
-    this.application = resolvedApplication.data;
+    this.application = resolvedApplication;
 
     if (!this.application.group) {
       this.application.group = GroupService.getEmptyGroup();
     }
     this.groups = [this.application.group];
     this.initialApplication = _.cloneDeep(this.application);
-    this.ApplicationService = ApplicationService;
-    this.NotificationService = NotificationService;
-    this.GroupService = GroupService;
-    this.UserService = UserService;
-    this.$scope = $scope;
-    this.$rootScope = $rootScope;
-    this.$state = $state;
-    this.$mdDialog = $mdDialog;
   }
 
-  get(applicationId) {
-    this.ApplicationService.get(applicationId).then(response => {
-      this.application = response.data;
+  update() {
+    this.ApplicationService.update(this.application).then(() => {
       this.initialApplication = _.cloneDeep(this.application);
-    });
-  }
-
-  update(application) {
-    this.ApplicationService.update(application).then(() => {
-      this.initialApplication = _.cloneDeep(application);
       this.$scope.formApplication.$setPristine();
-      this.NotificationService.show('Application ' + application.name + ' has been updated');
+      this.NotificationService.show('Application ' + this.application.name + ' has been updated');
       this.$rootScope.currentResource = this.application.name;
     });
   }
 
-  delete(application) {
-    this.ApplicationService.delete(application).then(() => {
-      this.NotificationService.show('Application ' + application.name + ' has been deleted');
+  delete() {
+    this.ApplicationService.delete(this.application.id).then(() => {
+      this.NotificationService.show('Application ' + this.application.name + ' has been deleted');
       this.$state.go('applications.list', {}, {reload: true});
     });
   }
@@ -89,20 +84,20 @@ class ApplicationGeneralController {
 
   showDeleteApplicationConfirm(ev) {
     ev.stopPropagation();
-    var self = this;
+    let that = this;
     this.$mdDialog.show({
       controller: 'DialogConfirmController',
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Would you like to delete your application?',
-      msg: "",
       locals: {
+        msg: '',
+        title: 'Would you like to delete your application?',
         confirmButton: 'Remove'
       }
     }).then(function (response) {
       if (response) {
-        self.delete(self.application);
+        that.delete();
       }
     });
   }

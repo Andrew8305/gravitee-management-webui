@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 class NotificationService {
-  constructor (private $mdToast) {
+  constructor (
+    private $mdToast: ng.material.IToastService) {
     'ngInject';
   }
 
-  show(message, isError) {
+  show(message: any, isError?: boolean) {
       this.$mdToast.show(
         this.$mdToast.simple()
-          .content(message.statusText || message)
+          .textContent(message.statusText || message)
           .position('bottom right')
           .hideDelay(3000)
           .theme(isError ? 'toast-error' : 'toast-success')
       );
     }
 
-  showError(error, message?) {
+  showError(error: any, message?: string) {
       this.show(message || (
         error.data ?
           Array.isArray(error.data) ?

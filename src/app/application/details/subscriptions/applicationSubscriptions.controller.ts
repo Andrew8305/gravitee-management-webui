@@ -15,6 +15,9 @@
  */
 import * as _ from 'lodash';
 import * as angular from 'angular';
+
+import ApplicationService from '../../../services/applications.service';
+import NotificationService from '../../../services/notification.service';
 import ApiService from "../../../services/api.service";
 
 class ApplicationSubscriptionsController {
@@ -24,27 +27,27 @@ class ApplicationSubscriptionsController {
   private selectedStatus: string[];
   private apiNameById: any;
   private subscriptionsByApi: any;
+  private showRevokedKeys: boolean;
+  private data: any[];
 
   constructor(
     private resolvedApplication,
     private resolvedSubscriptions,
-    private ApplicationService,
-    private NotificationService,
-    private $mdDialog,
-    private $scope,
+    private ApplicationService: ApplicationService,
+    private NotificationService: NotificationService,
+    private $mdDialog: angular.material.IDialogService,
     private ApiService: ApiService
   ) {
     'ngInject';
 
-    console.log('je suis ici');
-    this.application = resolvedApplication.data;
-    $scope.data = [];
-    this.subscriptions = resolvedSubscriptions.data;
-    $scope.showRevokedKeys = false;
-
+    this.application = resolvedApplication;
+    this.subscriptions = resolvedSubscriptions;
+    this.showRevokedKeys = false;
+    this.data = [];
     this.statusFilters = ['accepted', 'pending', 'rejected', 'closed'];
     this.selectedStatus = ['accepted', 'pending'];
     this.apiNameById = {};
+
     this.applyFilters();
   }
 
@@ -58,8 +61,9 @@ class ApplicationSubscriptionsController {
   }
 
   applyFilters() {
-    this.subscriptionsByApi = _.groupBy(_.filter(this.subscriptions, (subscription: any) => _.includes(this.selectedStatus, subscription.status)), function (sub) {
-      this.apiNameById[sub.plan.apis[0].id] = sub.plan.apis[0].name;
+    let that = this;
+    this.subscriptionsByApi = _.groupBy(_.filter(that.subscriptions, (subscription: any) => _.includes(that.selectedStatus, subscription.status)), function (sub) {
+      that.apiNameById[sub.plan.apis[0].id] = sub.plan.apis[0].name;
       return sub.plan.apis[0].id;
     });
   }
@@ -88,9 +92,9 @@ class ApplicationSubscriptionsController {
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Are you sure you want to renew your API Key ?',
-      msg: "Your previous API Key will be no longer valid in 1 hour !",
       locals: {
+        title: 'Are you sure you want to renew your API Key ?',
+        msg: 'Your previous API Key will be no longer valid in 1 hour !',
         confirmButton: 'Renew'
       }
     }).then(function (response) {
@@ -110,9 +114,8 @@ class ApplicationSubscriptionsController {
       controllerAs: 'ctrl',
       templateUrl: 'app/components/dialog/confirmWarning.dialog.html',
       clickOutsideToClose: true,
-      title: 'Are you sure you want to revoke API Key \'' + apiKey + '\'?',
-      msg: "",
       locals: {
+        title: 'Are you sure you want to revoke API Key \'' + apiKey + '\'?',
         confirmButton: 'Revoke'
       }
     }).then(function (response) {
@@ -137,8 +140,10 @@ class ApplicationSubscriptionsController {
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
-      application: this.application,
-      subscriptions: this.subscriptions
+      locals: {
+        application: this.application,
+        subscriptions: this.subscriptions
+      }
     }).then(application =>{
       if (application) {
         // TODO : check it ! There was no ApiService...

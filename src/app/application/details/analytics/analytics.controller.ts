@@ -15,21 +15,22 @@
  */
 import * as _ from 'lodash';
 
+import ApplicationService from '../../../services/applications.service';
+
 class ApplicationAnalyticsController {
 
   private application: any;
+  private applicationDashboard: any;
 
   constructor(
-    private ApplicationService,
     private resolvedApplication,
-    private $scope
+    private ApplicationService: ApplicationService
   ) {
     'ngInject';
 
-    this.$scope.Object = Object;
-    this.application = resolvedApplication.data;
+    this.application = resolvedApplication;
 
-    this.$scope.applicationDashboard = [{
+    this.applicationDashboard = [{
       col: 0,
       row: 0,
       sizeY: 1,
@@ -113,16 +114,15 @@ class ApplicationAnalyticsController {
       }
     }];
 
-    var _that = this;
+    var that = this;
 
-    _.forEach(this.$scope.applicationDashboard, function (widget) {
+    _.forEach(this.applicationDashboard, function (widget) {
       _.merge(widget, {
-        root: _that.application.id,
+        root: that.application.id,
         chart: {
           service: {
-            caller: _that.ApplicationService,
-            function: _that.ApplicationService.analytics
-
+            caller: that.ApplicationService,
+            function: that.ApplicationService.analytics
           }
         }
       });
