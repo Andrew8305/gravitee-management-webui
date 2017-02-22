@@ -69,7 +69,9 @@ require('angular-swagger-ui/dist/scripts/modules/swagger-xml-formatter.min.js');
 require('angular-swagger-ui/dist/scripts/modules/swagger1-to-swagger2-converter.min.js');
 require('highcharts');
 require('angular-gridster');
-require('js-yaml');
+
+import * as jsyaml from 'js-yaml';
+(<any>window).jsyaml = jsyaml;
 
 import '../constants';
 
