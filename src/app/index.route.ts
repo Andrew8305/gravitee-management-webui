@@ -389,7 +389,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('instances.detail', {
       abstract: true,
       url: '/:instanceId',
-      templateUrl: 'app/instances/details/instance.html',
+      component: 'instance',
       resolve: {
         instance: ($stateParams: ng.ui.IStateParamsService, InstancesService: InstancesService) =>
           InstancesService.get($stateParams['instanceId']).then(response => response.data)
@@ -397,19 +397,7 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('instances.detail.environment', {
       url: '/environment',
-        views: {
-          content: {
-            template: '<span>ceci est un composant</span>'
-          },
-          header: {
-            template: '<span>ceci est un header</span>'
-          }
-        },
-      /*
-      templateUrl: 'app/instances/details/environment/instanceEnvironment.html',
-      controller: 'InstanceEnvironmentController',
-      controllerAs: 'instanceEnvironmentCtrl',
-      */
+      component: 'instanceEnvironment',
       data: {
         menu: {
           label: 'Environment',

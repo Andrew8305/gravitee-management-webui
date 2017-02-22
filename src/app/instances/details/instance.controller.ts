@@ -18,7 +18,7 @@ class InstanceController {
 
   constructor(resolvedInstance, $rootScope) {
 		'ngInject';
-    this.instance = resolvedInstance.data;
+    this.instance = resolvedInstance;
 
     $rootScope.currentResource = this.instance.hostname;
 	}

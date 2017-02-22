@@ -148,7 +148,7 @@ import InstanceEnvironmentController from './instances/details/environment/insta
 import InstanceEnvironmentComponent from './instances/details/environment/instance-environment.component';
 import InstanceMonitoringController from './instances/details/monitoring/instanceMonitoring.controller';
 import InstancesComponent from "./instances/instances.component";
-
+import InstanceComponent from "./instances/details/instance.component";
 
 import ImageDirective from './components/image/image.directive';
 import EventsService from './services/events.service';
@@ -338,8 +338,9 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .component('tenants', TenantsComponent)
   .component('tags', TagsComponent)
   .component('instances', InstancesComponent)
-  .component('instance-header', InstanceHeaderComponent)
-  .component('instance-environment', InstanceEnvironmentComponent)
+  .component('instance', InstanceComponent)
+  .component('instanceHeader', InstanceHeaderComponent)
+  .component('instanceEnvironment', InstanceEnvironmentComponent)
   .filter('humanDateFilter', function () {
     return function(input) {
       if (!moment().subtract(1, 'weeks').isAfter(input)) {

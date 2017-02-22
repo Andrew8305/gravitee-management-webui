@@ -18,15 +18,16 @@ import * as _ from 'lodash';
 class InstanceEnvironmentController {
   private instance: any;
   private systemPropertiesProvider: any;
+  private filterSystemProperty: string;
 
-  constructor(private $scope) {
+  constructor() {
     'ngInject';
     this.systemPropertiesProvider = this.sort(this.instance.systemProperties);
     this.instance.systemProperties = this.systemPropertiesProvider;
   }
 
   sort(systemProperties) {
-    var systemPropertiesProvider = {};
+    let systemPropertiesProvider = {};
     _.forEach(_.sortBy(_.keys(systemProperties)), function (key) {
       systemPropertiesProvider[key] = systemProperties[key];
     });
@@ -35,8 +36,8 @@ class InstanceEnvironmentController {
 
   filter() {
     var that = this;
-    that.instance.systemProperties = {};
-    var lowerFilter = that.$scope.filterSystemProperty.toLowerCase();
+    this.instance.systemProperties = {};
+    let lowerFilter = this.filterSystemProperty.toLowerCase();
     _.forEach(that.systemPropertiesProvider, function (value, key) {
       if (_.includes(key.toLowerCase(), lowerFilter) || _.includes(value.toLowerCase(), lowerFilter)) {
         that.instance.systemProperties[key] = value;

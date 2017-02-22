@@ -15,6 +15,5 @@
     limitations under the License.
 
 -->
-<ui-view name="header"></ui-view>
-<!-- <div ng-include="'app/instances/details/instanceHeader.html'"></div> -->
-<ui-view name="content"></ui-view>
+<instance-header instance="$ctrl.instance"></instance-header>
+<ui-view></ui-view>
