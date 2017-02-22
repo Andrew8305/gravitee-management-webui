@@ -367,16 +367,14 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     .state('instances', {
       abstract: true,
       url: '/instances',
-      templateUrl: 'app/instances/instancesList.html',
+      template: '<div ui-view></div>',
       parent: 'withSidenav'
     })
     .state('instances.list', {
       url: '/',
-      templateUrl: 'app/instances/instances.html',
-      controller: 'InstancesController',
-      controllerAs: 'instancesCtrl',
+      component: 'instances',
       resolve: {
-        resolvedInstances: (InstancesService: InstancesService) => InstancesService.list().then(response => response.data)
+        instances: (InstancesService: InstancesService) => InstancesService.list().then(response => response.data)
       },
       data: {
         menu: {

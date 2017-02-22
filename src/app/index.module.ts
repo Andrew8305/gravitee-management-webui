@@ -191,6 +191,7 @@ import DeleteTenantDialogController from './configuration/admin/tenants/delete.t
 import ViewsComponent from "./configuration/admin/views/views.component";
 import TenantsComponent from "./configuration/admin/tenants/tenants.component";
 import TagsComponent from "./configuration/admin/tags/tags.component";
+import InstancesComponent from "./instances/instances.component";
 
 import apisConfig from './api/apis.route';
 import applicationsConfig from './application/applications.route';
@@ -332,6 +333,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .component('views', ViewsComponent)
   .component('tenants', TenantsComponent)
   .component('tags', TagsComponent)
+  .component('instances', InstancesComponent)
   .filter('humanDateFilter', function () {
     return function(input) {
       if (!moment().subtract(1, 'weeks').isAfter(input)) {

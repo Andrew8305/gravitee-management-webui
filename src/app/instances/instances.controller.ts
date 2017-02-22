@@ -29,11 +29,9 @@ class InstancesController {
   private searchGatewayInstances: string;
 
   constructor(
-    private resolvedInstances,
     private $scope: IInstancesScope) {
 		'ngInject';
 
-    this.instances = resolvedInstances;
     this.searchGatewayInstances = '';
     this.startedInstances = _.filter(this.instances, { 'state': 'started'});
     this._displayEmptyMode = this.startedInstances.length === 0;
