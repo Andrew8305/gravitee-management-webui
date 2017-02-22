@@ -22,6 +22,9 @@ class InstanceEnvironmentController {
 
   constructor() {
     'ngInject';
+  }
+
+  $onInit() {
     this.systemPropertiesProvider = this.sort(this.instance.systemProperties);
     this.instance.systemProperties = this.systemPropertiesProvider;
   }
