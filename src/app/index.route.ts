@@ -388,21 +388,34 @@ function routerConfig($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: 
     })
     .state('instances.detail', {
       abstract: true,
-      url: '/:id',
-      templateUrl: 'app/instances/details/instance.html',
-      controller: 'InstanceController',
-      controllerAs: 'instanceCtrl',
+      url: '/:instanceId',
+      views: {
+        '': { templateUrl: 'app/instances/details/instance.html' },
+        header: 'instance-header'
+      },
       resolve: {
-        resolvedInstance: function ($stateParams, InstancesService) {
-          return InstancesService.get($stateParams.id);
-        }
+        instance: ($stateParams: ng.ui.IStateParamsService, InstancesService: InstancesService) =>
+          InstancesService.get($stateParams['instanceId']).then(response => response.data)
       }
     })
     .state('instances.detail.environment', {
       url: '/environment',
+      views: {
+        content: 'instance-environment',
+        // fonctionne
+        header: {
+          template: '<span>ISNATNCE ENV</span>'
+        }
+        // fonctionne pas
+        /*
+         header:'instance-header'
+         */
+      },
+      /*
       templateUrl: 'app/instances/details/environment/instanceEnvironment.html',
       controller: 'InstanceEnvironmentController',
       controllerAs: 'instanceEnvironmentCtrl',
+      */
       data: {
         menu: {
           label: 'Environment',

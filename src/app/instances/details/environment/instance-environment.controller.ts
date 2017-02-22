@@ -19,9 +19,8 @@ class InstanceEnvironmentController {
   private instance: any;
   private systemPropertiesProvider: any;
 
-  constructor(resolvedInstance, private $scope) {
+  constructor(private $scope) {
     'ngInject';
-    this.instance = resolvedInstance.data;
     this.systemPropertiesProvider = this.sort(this.instance.systemProperties);
     this.instance.systemProperties = this.systemPropertiesProvider;
   }

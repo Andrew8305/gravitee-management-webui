@@ -139,11 +139,17 @@ import RoleDirective from './components/role/role.directive';
 import DiffDirective from './components/diff/diff.directive';
 import DialogApiImportController from './api/admin/general/dialog/apiImportDialog.controller';
 import DialogApiExportController from './api/admin/general/dialog/apiExportDialog.controller';
+
+// Instances
 import InstancesService from './services/instances.service';
 import InstancesController from './instances/instances.controller';
-import InstanceController from './instances/details/instance.controller';
-import InstanceEnvironmentController from './instances/details/environment/instanceEnvironment.controller';
+import InstanceHeaderComponent from './instances/details/header/instance-header.component';
+import InstanceEnvironmentController from './instances/details/environment/instance-environment.controller';
+import InstanceEnvironmentComponent from './instances/details/environment/instance-environment.component';
 import InstanceMonitoringController from './instances/details/monitoring/instanceMonitoring.controller';
+import InstancesComponent from "./instances/instances.component";
+
+
 import ImageDirective from './components/image/image.directive';
 import EventsService from './services/events.service';
 import AnalyticsService from './services/analytics.service';
@@ -191,7 +197,6 @@ import DeleteTenantDialogController from './configuration/admin/tenants/delete.t
 import ViewsComponent from "./configuration/admin/views/views.component";
 import TenantsComponent from "./configuration/admin/tenants/tenants.component";
 import TagsComponent from "./configuration/admin/tags/tags.component";
-import InstancesComponent from "./instances/instances.component";
 
 import apisConfig from './api/apis.route';
 import applicationsConfig from './application/applications.route';
@@ -267,7 +272,6 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .controller('PageController', PageController)
   .controller('LoginController', LoginController)
   .controller('InstancesController', InstancesController)
-  .controller('InstanceController', InstanceController)
   .controller('InstanceEnvironmentController', InstanceEnvironmentController)
   .controller('InstanceMonitoringController', InstanceMonitoringController)
   .controller('DashboardController', DashboardController)
@@ -334,6 +338,8 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .component('tenants', TenantsComponent)
   .component('tags', TagsComponent)
   .component('instances', InstancesComponent)
+  .component('instance-header', InstanceHeaderComponent)
+  .component('instance-environment', InstanceEnvironmentComponent)
   .filter('humanDateFilter', function () {
     return function(input) {
       if (!moment().subtract(1, 'weeks').isAfter(input)) {

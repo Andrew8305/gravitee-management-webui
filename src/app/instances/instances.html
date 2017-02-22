@@ -34,7 +34,7 @@
       <div class="apis-box" flex="20" flex-gt-sm="20" flex-xs="50" flex-sm="33"
            ng-repeat="instance in $ctrl.instances | filter:displayAllInstances?{}:{state: 'started'}
              | filter:$ctrl.searchGatewayInstances | orderBy:'-started_at'">
-        <a ui-sref="instances.detail.environment({id: instance.event})">
+        <a ui-sref="instances.detail.environment({instanceId: instance.event})">
           <md-card class="api-box gravitee-card gravitee-api-card">
             <md-card-header layout="row" layout-align="end start">
             </md-card-header>

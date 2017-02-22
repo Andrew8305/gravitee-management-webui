@@ -24,53 +24,53 @@
         <tr md-row>
           <td md-cell><ng-md-icon icon="computer"></ng-md-icon></td>
           <td md-cell>Hostname</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.hostname}}</td>
+          <td md-cell>{{$ctrl.instance.hostname}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="network_wifi"></ng-md-icon></td>
           <td md-cell>IP</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.ip}}</td>
+          <td md-cell>{{$ctrl.instance.ip}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="network_wifi"></ng-md-icon></td>
           <td md-cell>Port</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.port}}</td>
+          <td md-cell>{{$ctrl.instance.port}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="traffic"></ng-md-icon></td>
           <td md-cell>State</td>
-          <td md-cell ng-class="{'gravitee-instances-started':instanceEnvironmentCtrl.instance.state === 'started',
-           'gravitee-instances-stopped':instanceEnvironmentCtrl.instance.state === 'stopped'}">{{instanceEnvironmentCtrl.instance.state}}</td>
+          <td md-cell ng-class="{'gravitee-instances-started':$ctrl.instance.state === 'started',
+           'gravitee-instances-stopped':$ctrl.instance.state === 'stopped'}">{{$ctrl.instance.state}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="flag"></ng-md-icon></td>
           <td md-cell>Version</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.version}}</td>
+          <td md-cell>{{$ctrl.instance.version}}</td>
         </tr>
-        <tr md-row ng-if="instanceEnvironmentCtrl.instance.tags">
+        <tr md-row ng-if="$ctrl.instance.tags">
           <td md-cell><ng-md-icon icon="label"></ng-md-icon></td>
           <td md-cell>Sharding tags</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.tags}}</td>
+          <td md-cell>{{$ctrl.instance.tags}}</td>
         </tr>
-        <tr md-row ng-if="instanceEnvironmentCtrl.instance.tenant">
+        <tr md-row ng-if="$ctrl.instance.tenant">
           <td md-cell><ng-md-icon icon="shuffle"></ng-md-icon></td>
           <td md-cell>Tenant</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.tenant}}</td>
+          <td md-cell>{{$ctrl.instance.tenant}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="timer"></ng-md-icon></td>
           <td md-cell>Started at</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.started_at | date:'medium'}}</td>
+          <td md-cell>{{$ctrl.instance.started_at | date:'medium'}}</td>
         </tr>
         <tr md-row>
           <td md-cell><ng-md-icon icon="favorite"></ng-md-icon></td>
           <td md-cell>Last heartbeat at</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.last_heartbeat_at | date:'medium'}}</td>
+          <td md-cell>{{$ctrl.instance.last_heartbeat_at | date:'medium'}}</td>
         </tr>
-        <tr md-row ng-if="instanceEnvironmentCtrl.instance.stopped_at">
+        <tr md-row ng-if="$ctrl.instance.stopped_at">
           <td md-cell><ng-md-icon icon="power_settings_new"></ng-md-icon></td>
           <td md-cell>Stopped at</td>
-          <td md-cell>{{instanceEnvironmentCtrl.instance.stopped_at | date:'medium'}}</td>
+          <td md-cell>{{$ctrl.instance.stopped_at | date:'medium'}}</td>
         </tr>
         </tbody>
       </table>
@@ -90,7 +90,7 @@
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row ng-repeat="plugin in instanceEnvironmentCtrl.instance.plugins | orderBy: order" title="{{plugin.name}}">
+        <tr md-row ng-repeat="plugin in $ctrl.instance.plugins | orderBy: order" title="{{plugin.name}}">
           <td md-cell ng-switch on="plugin.type">
             <ng-md-icon ng-switch-when="policy" icon="shuffle"></ng-md-icon>
             <ng-md-icon ng-switch-when="service" icon="layers"></ng-md-icon>
@@ -114,7 +114,7 @@
       </div>
       <div flex="50" layout="row">
         <input class="form-control gravitee-instances-table-search" type="text"
-               ng-model="filterSystemProperty" ng-change="instanceEnvironmentCtrl.filter()"
+               ng-model="filterSystemProperty" ng-change="$ctrl.filter()"
                placeholder="Filter by name/value..." />
         <ng-md-icon icon="search"></ng-md-icon>
       </div>
@@ -128,7 +128,7 @@
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row ng-repeat="(systemPropertyKey, systemPropertyValue) in instanceEnvironmentCtrl.instance.systemProperties">
+        <tr md-row ng-repeat="(systemPropertyKey, systemPropertyValue) in $ctrl.instance.systemProperties">
           <td md-cell>{{systemPropertyKey}}</td>
           <td md-cell>{{systemPropertyValue}}</td>
         </tr>
