@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 import * as _ from 'lodash';
+import ViewService from '../../../services/view.service';
+import NotificationService from '../../../services/notification.service';
 
 class ViewsController {
   private viewsToCreate: any[];
@@ -22,29 +24,16 @@ class ViewsController {
   private views: any[];
 
   constructor(
-    private ViewService,
-    private NotificationService,
-    private $q,
+    private ViewService: ViewService,
+    private NotificationService: NotificationService,
+    private $q: ng.IQService,
     private $mdEditDialog,
-    private $mdDialog
-  ) {
+    private $mdDialog: angular.material.IDialogService) {
     'ngInject';
 
-
-    //this.loadViews();
     this.viewsToCreate = [];
     this.viewsToUpdate = [];
   }
-
-  /*loadViews() {
-    this.ViewService.list().then(response =>{
-      this.views = response.data;
-      _.each(this.views, function(view) {
-        delete view.totalApis;
-      });
-      this.initialViews = _.cloneDeep(this.views);
-    });
-  }*/
 
   newView(event) {
     event.stopPropagation();
@@ -130,7 +119,6 @@ class ViewsController {
       this.ViewService.update(that.viewsToUpdate)
     ]).then(function () {
       that.NotificationService.show("Views saved with success");
-      // that.loadViews();
       that.viewsToCreate = [];
       that.viewsToUpdate = [];
     });
@@ -141,7 +129,9 @@ class ViewsController {
     this.$mdDialog.show({
       controller: 'DeleteViewDialogController',
       templateUrl: 'app/configuration/admin/views/delete.view.dialog.html',
-      view: view
+      locals: {
+        view: view
+      }
     }).then(function (deleteView) {
       if (deleteView) {
         if (view.id) {

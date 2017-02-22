@@ -189,8 +189,12 @@ import TenantService from './services/tenant.service';
 import DeleteTenantDialogController from './configuration/admin/tenants/delete.tenant.dialog.controller';
 
 import ViewsComponent from "./configuration/admin/views/views.component";
+import TenantsComponent from "./configuration/admin/tenants/tenants.component";
+import TagsComponent from "./configuration/admin/tags/tags.component";
+
 import apisConfig from './api/apis.route';
 import applicationsConfig from './application/applications.route';
+import configurationConfig from './configuration/configuration.route';
 
 angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng-showdown', 'swaggerUi',
   'ngMdIcons', 'ui.codemirror', 'md.data.table', 'ngCookies', 'dragularModule', 'readMore',
@@ -199,6 +203,7 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .config(config)
   .config(routerConfig)
   .config(apisConfig)
+  .config(configurationConfig)
   .config(applicationsConfig)
   .config(interceptorConfig)
   .config(delegatorConfig)
@@ -325,6 +330,8 @@ angular.module('gravitee', ['ui.router', 'ngMaterial', /*'ramlConsoleApp',*/ 'ng
   .directive('graviteeTimeframe', () => new TimeframeDirective())
   .directive('graviteeAnalyticsFilter', () => new AnalyticsFilterDirective())
   .component('views', ViewsComponent)
+  .component('tenants', TenantsComponent)
+  .component('tags', TagsComponent)
   .filter('humanDateFilter', function () {
     return function(input) {
       if (!moment().subtract(1, 'weeks').isAfter(input)) {

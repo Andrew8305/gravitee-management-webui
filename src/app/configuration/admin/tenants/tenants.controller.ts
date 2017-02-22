@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 import * as _ from 'lodash';
+import TenantService from '../../../services/tenant.service';
+import NotificationService from '../../../services/notification.service';
 
 class TenantsController {
   private tenantsToCreate: any[];
@@ -21,23 +23,16 @@ class TenantsController {
   private initialTenants: any;
   private tenants: any;
 
-  constructor(private $scope, private TenantService, private NotificationService, private $q, private $mdEditDialog, private $mdDialog) {
+  constructor(
+    private TenantService: TenantService,
+    private NotificationService: NotificationService,
+    private $q: ng.IQService,
+    private $mdEditDialog,
+    private $mdDialog: angular.material.IDialogService) {
     'ngInject';
 
-    this.loadTenants();
     this.tenantsToCreate = [];
     this.tenantsToUpdate = [];
-  }
-
-  loadTenants() {
-    var that = this;
-    this.TenantService.list().then(function (response) {
-      that.tenants = response.data;
-      _.each(that.tenants, function(tenant) {
-        delete tenant.totalApis;
-      });
-      that.initialTenants = _.cloneDeep(that.tenants);
-    });
   }
 
   newTenant(event) {
@@ -47,10 +42,10 @@ class TenantsController {
 
     var promise = this.$mdEditDialog.small({
       placeholder: 'Add a name',
-      save: function (input) {
-        var tenant = {name: input.$modelValue};
-        that.tenants.push(tenant);
-        that.tenantsToCreate.push(tenant);
+      save: input => {
+        const tenant = {name: input.$modelValue};
+        this.tenants.push(tenant);
+        this.tenantsToCreate.push(tenant);
       },
       targetEvent: event,
       validators: {
@@ -61,7 +56,7 @@ class TenantsController {
     promise.then(function (ctrl) {
       var input = ctrl.getInput();
 
-      input.$tenantChangeListeners.push(function () {
+      input.$viewChangeListeners.push(function () {
         input.$setValidity('empty', input.$modelValue.length !== 0);
         input.$setValidity('duplicate', !_.includes(_.map(that.tenants, 'name'), input.$modelValue));
       });
@@ -91,7 +86,7 @@ class TenantsController {
     promise.then(function (ctrl) {
       var input = ctrl.getInput();
 
-      input.$tenantChangeListeners.push(function () {
+      input.$viewChangeListeners.push(function () {
         input.$setValidity('empty', input.$modelValue.length !== 0);
       });
     });
@@ -126,7 +121,7 @@ class TenantsController {
       this.TenantService.update(that.tenantsToUpdate)
     ]).then(function () {
       that.NotificationService.show("Tenants saved with success");
-      that.loadTenants();
+//      that.loadTenants();
       that.tenantsToCreate = [];
       that.tenantsToUpdate = [];
     });
@@ -137,7 +132,9 @@ class TenantsController {
     this.$mdDialog.show({
       controller: 'DeleteTenantDialogController',
       templateUrl: 'app/configuration/admin/tenants/delete.tenant.dialog.html',
-      tenant: tenant
+      locals: {
+        tenant: tenant
+      }
     }).then(function (deleteTenant) {
       if (deleteTenant) {
         if (tenant.id) {

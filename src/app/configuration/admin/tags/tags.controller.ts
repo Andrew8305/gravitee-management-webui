@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 import * as _ from 'lodash';
+import TagService from '../../../services/tag.service';
+import NotificationService from '../../../services/notification.service';
 
 class TagsController {
   private tagsToCreate: any[];
@@ -21,22 +23,16 @@ class TagsController {
   private initialTags: any;
   private tags: any;
 
-  constructor(private $scope, private TagService, private NotificationService, private $q, private $mdEditDialog, private $mdDialog) {
+  constructor(
+    private TagService: TagService,
+    private NotificationService: NotificationService,
+    private $q: ng.IQService,
+    private $mdEditDialog,
+    private $mdDialog: angular.material.IDialogService) {
     'ngInject';
 
-    this.loadTags();
     this.tagsToCreate = [];
     this.tagsToUpdate = [];
-  }
-
-  loadTags() {
-    this.TagService.list().then((response: any) =>{
-      this.tags = response.data;
-      _.each(this.tags, tag =>{
-        delete tag.totalApis;
-      });
-      this.initialTags = _.cloneDeep(this.tags);
-    });
   }
 
   newTag(event) {
@@ -46,10 +42,10 @@ class TagsController {
 
     var promise = this.$mdEditDialog.small({
       placeholder: 'Add a name',
-      save: function (input) {
-        var tag = {name: input.$modelValue};
-        that.tags.push(tag);
-        that.tagsToCreate.push(tag);
+      save: input => {
+        const tag = {name: input.$modelValue};
+        this.tags.push(tag);
+        this.tagsToCreate.push(tag);
       },
       targetEvent: event,
       validators: {
@@ -90,7 +86,7 @@ class TagsController {
     promise.then(function (ctrl) {
       var input = ctrl.getInput();
 
-      input.$tagChangeListeners.push(function () {
+      input.$viewChangeListeners.push(function () {
         input.$setValidity('empty', input.$modelValue.length !== 0);
       });
     });
@@ -125,7 +121,6 @@ class TagsController {
       this.TagService.update(that.tagsToUpdate)
     ]).then(function () {
       that.NotificationService.show("Tags saved with success");
-      that.loadTags();
       that.tagsToCreate = [];
       that.tagsToUpdate = [];
     });
@@ -136,7 +131,9 @@ class TagsController {
     this.$mdDialog.show({
       controller: 'DeleteTagDialogController',
       templateUrl: 'app/configuration/admin/tags/delete.tag.dialog.html',
-      tag: tag
+      locals: {
+        tag: tag
+      }
     }).then(function (deleteTag) {
       if (deleteTag) {
         if (tag.id) {
